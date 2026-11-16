@@ -18,9 +18,9 @@ Settings → Pages → Source: **Deploy from a branch** → Branch: `main`, fold
 
 ## Where the data is kept
 
-On the website, every phone or computer keeps its own data in its browser. Nothing is sent to a server, and devices do not sync. Use **Back up data** at the bottom of the page regularly, and **Restore backup** to move the data to a new phone. Clearing the browser's site data deletes it.
+On the website, every phone or computer keeps its own data in its browser. Nothing is sent to a server, and devices do not sync. Use **Back up data** in Settings (gear icon, top right) regularly, and **Restore backup** to move the data to a new phone. Clearing the browser's site data deletes it.
 
-网站版的资料只存在每台手机或电脑的浏览器里，不会上传到服务器，各台手机之间也不会同步。请定期按页面最下方的「备份资料」，换手机时用「还原备份」。清除浏览器网站资料会把资料删掉。
+网站版的资料只存在每台手机或电脑的浏览器里，不会上传到服务器，各台手机之间也不会同步。请定期在设置（右上角齿轮）里按「备份资料」，换手机时用「还原备份」。清除浏览器网站资料会把资料删掉。
 
 ## Not available on the website version
 

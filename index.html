@@ -281,7 +281,76 @@ label.f .req{color:var(--danger)}
 .save-bar{position:sticky;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
 .save-bar .wrap{display:flex;gap:10px;justify-content:flex-end;padding-block:10px;max-width:760px}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-size:14px;z-index:60;max-width:calc(100% - 32px)}
-@media (prefers-reduced-motion:no-preference){.card{transition:border-color .15s}.sheet{animation:up .18s ease-out}@keyframes up{from{transform:translateY(12px);opacity:.6}to{transform:none;opacity:1}}}
+/* ---- buttons: white with dark text; colour only when selected or pressed ---- */
+.btn{transition:background-color .16s,color .16s,border-color .16s,transform .08s,box-shadow .16s;-webkit-tap-highlight-color:transparent;color:var(--ink)}
+.btn.primary,a.btn.primary{background:var(--surface);color:var(--ink);border:1.5px solid var(--accent);font-weight:700}
+.btn.danger{background:var(--surface);color:var(--danger);border-color:var(--danger-soft)}
+@media (hover:hover){.btn:not(:disabled):not(.ghost):hover{border-color:var(--accent);box-shadow:0 1px 0 var(--line)}.btn.primary:not(:disabled):hover{background:var(--accent-soft)}.btn.danger:not(:disabled):hover{border-color:var(--danger);background:var(--danger-soft)}}
+.btn:not(:disabled):active,.btn.primary:not(:disabled):active,a.btn:active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);transform:scale(.97)}
+.btn.danger:not(:disabled):active,.btn.solid-danger:active{background:var(--danger);color:var(--surface);border-color:var(--danger)}
+.btn.ghost:active{background:var(--accent-soft);color:var(--ink);border-color:transparent}
+.langs{background:var(--surface)}
+.langs button{color:var(--ink);transition:background-color .16s,color .16s}
+.langs button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);box-shadow:none}
+.langs button:active{transform:scale(.96)}
+.chip{color:var(--ink);transition:background-color .16s,color .16s,border-color .16s}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.chip:active{transform:scale(.96)}
+.tabs{gap:6px;border-bottom:0;overflow-x:auto;scrollbar-width:none;padding:2px 0}
+.tabs::-webkit-scrollbar,.chips::-webkit-scrollbar{display:none}
+.tabs button{flex:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 14px;margin:0;transition:background-color .16s,color .16s,border-color .16s}
+.tabs button[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tabs button[aria-selected="true"] b{color:inherit;opacity:.8}
+.tabs button:active{transform:scale(.96)}
+.tabs .tdot{display:inline-block;min-width:18px;height:18px;border-radius:9px;background:var(--warn);color:#fff;font-size:11px;line-height:18px;text-align:center;padding:0 5px;font-family:var(--f-num)}
+.icon-btn{width:40px;height:40px;display:grid;place-items:center;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:0;flex:none;transition:background-color .16s,color .16s,transform .08s}
+.icon-btn:active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);transform:scale(.95)}
+@media (hover:hover){.icon-btn:hover{border-color:var(--accent)}}
+.card{transition:border-color .16s,transform .16s,box-shadow .16s}
+@media (hover:hover){.card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.07)}}
+.card:active{transform:scale(.985)}
+.brow{transition:border-color .16s}
+.brow-open:active{background:var(--accent-soft)}
+.sk{background:linear-gradient(90deg,var(--line) 25%,var(--bg) 50%,var(--line) 75%);background-size:200% 100%;animation:sk 1.3s ease-in-out infinite}
+.sk-line{height:12px;border-radius:6px;margin:4px 0}
+.sk-card{pointer-events:none;border-color:var(--line)}
+@keyframes sk{from{background-position:200% 0}to{background-position:-200% 0}}
+.sw-list{display:flex;flex-direction:column}
+.sw-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--line);cursor:pointer}
+.sw-row:first-child{border-top:0}
+.sw-row>span{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.sw-row small{color:var(--muted);font-size:12px}
+.sw{appearance:none;-webkit-appearance:none;width:46px;height:28px;border-radius:999px;background:var(--line);position:relative;flex:none;transition:background-color .2s;cursor:pointer;margin:0}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
+.sw:checked{background:var(--accent)}
+.sw:checked::after{transform:translateX(18px)}
+.set-link{display:flex;align-items:center;gap:12px;text-align:left;width:100%;font:inherit;color:var(--ink);cursor:pointer;transition:border-color .16s}
+.set-link>span:first-child{flex:1;display:flex;flex-direction:column}
+.set-link small{color:var(--muted);font-size:12px}
+.set-link>span:last-child{font-size:22px;color:var(--muted)}
+.set-link:active{background:var(--accent-soft)}
+.f .actions{margin-top:6px}
+.fban{border-color:var(--accent);background:var(--accent-soft)}.fban h2{color:var(--accent)}.fban .ren-row{border-top-color:var(--accent)}
+.ls-open{color:var(--accent);background:var(--accent-soft)}.ls-interested,.ls-closed{color:var(--ok);background:var(--ok-soft)}.ls-viewing{color:var(--warn);background:var(--warn-soft)}.ls-notInterested{color:var(--off);background:var(--off-soft)}
+.ld-hist{margin:0;padding-left:18px;font-size:14px;display:flex;flex-direction:column;gap:4px}
+.pay-ok{color:var(--ok);background:var(--ok-soft)}.pay-due{color:var(--warn);background:var(--warn-soft)}.pay-late{color:var(--danger);background:var(--danger-soft)}.pay-wait{color:var(--muted);background:var(--off-soft)}
+.pay-panel h3 .pill{letter-spacing:0}
+.pay-msgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:12px}
+.pay-msgs b{font-size:13px;display:block;margin-bottom:6px}
+.pay-msgs .vmsg{font-size:13px}
+.sheet-out{position:fixed;inset:0;z-index:41;pointer-events:none;overflow:hidden}
+@media (prefers-reduced-motion:no-preference){
+ .sheet{animation:sin .22s cubic-bezier(.2,.8,.2,1)}
+ @keyframes sin{from{transform:translateX(28px);opacity:.3}to{transform:none;opacity:1}}
+ .sheet.swap .sheet-main{animation:sfade .2s ease-out}
+ @keyframes sfade{from{opacity:.25;transform:translateY(6px)}to{opacity:1;transform:none}}
+ .sheet-out{animation:sout .2s ease-in forwards}
+ @keyframes sout{to{transform:translateX(36px);opacity:0}}
+ .toast:not([hidden]){animation:tin .2s ease-out}
+ @keyframes tin{from{opacity:0;transform:translate(-50%,8px)}to{opacity:1;transform:translate(-50%,0)}}
+ .renew{animation:sfade .25s ease-out}
+}
+@media (prefers-reduced-motion:reduce){.sheet-out{display:none}}
 </style>
 
 <header class="top"><div class="wrap">
@@ -291,6 +360,7 @@ label.f .req{color:var(--danger)}
   </div>
   <div class="langs" id="langs" role="group" aria-label="Language"></div>
   <button class="btn primary" id="addBtn" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span class="lbl-hide" id="addLbl"></span></button>
+  <button class="icon-btn" id="gearBtn" type="button" hidden></button>
 </div></header>
 
 <main class="wrap">
@@ -509,10 +579,11 @@ function renderChrome(){
   document.documentElement.lang=lang==="zh"?"zh-CN":lang;
   $("#appName").textContent=t("app");$("#sub").textContent=t("sub");$("#addLbl").textContent=t("add");
   $("#addBtn").setAttribute("aria-label",t("add"));
-  const ph=tab==="bookings"?t("b").bsearch:tab==="viewings"?vt("tab")+"…":t("search");$("#q").placeholder=ph;
+  const ph=tab==="bookings"?t("b").bsearch:tab==="viewings"?vt("tab")+"…":tab==="leads"?ldt("tab")+"…":t("search");$("#q").placeholder=ph;
   $("#dealF").setAttribute("aria-label",t("deal"));$("#dealF").innerHTML=`<option value="">${esc(t("dealAll"))}</option>`+["rent","sale"].map(k=>`<option value="${k}" ${dealF===k?"selected":""}>${esc(t("dealOpts")[k])}</option>`).join("");
   $("#typeF").setAttribute("aria-label",t("cat"));$("#typeF").innerHTML=`<option value="">${esc(t("allTypes"))}</option>`+TYPE_GROUPS.map(([g])=>`<option value="${g}" ${typeF===g?"selected":""}>${esc(t("tg")[g])}</option>`).join("");$("#q").setAttribute("aria-label",ph);
-  $("#langs").innerHTML=langButtons(lang,"data-lang");
+  $("#langs").innerHTML=langButtons(lang,"data-lang");$("#langs").hidden=!on("langs");
+  const gb=$("#gearBtn");gb.innerHTML=GEAR;gb.setAttribute("aria-label",t("S").T);gb.title=t("S").T;gb.hidden=!db;
   $("#notice").innerHTML=db&&canWrite&&!assets?`<div class="notice">${esc(t("editorsPhotos"))}</div>`:"";
 }
 function setLang(k){
@@ -520,7 +591,7 @@ function setLang(k){
   if(mode==="form")captureDraft();if(mode==="bform")captureBDraft();if(mode==="vform")captureVDraft();
   lang=k;try{localStorage.setItem("rlb-lang",k)}catch(_){}
   renderChrome();renderList();
-  if(mode==="detail")renderDetail();else if(mode==="form")renderForm();else if(mode==="share")renderShare();else if(mode==="bform")renderBookingForm();else if(mode==="bdetail")renderBooking();else if(mode==="agree")renderAgreement();else if(mode==="vform")renderViewingForm();else if(mode==="covers")renderCovers();else if(mode==="vdetail")renderViewing();
+  if(mode==="detail")renderDetail();else if(mode==="form")renderForm();else if(mode==="share")renderShare();else if(mode==="bform")renderBookingForm();else if(mode==="bdetail")renderBooking();else if(mode==="agree")renderAgreement();else if(mode==="vform")renderViewingForm();else if(mode==="covers")renderCovers();else if(mode==="vdetail")renderViewing();else if(mode==="settings")renderSettings();else if(mode==="ldetail")renderLead();
 }
 
 /* ================= list ================= */
@@ -529,19 +600,22 @@ function filtered(){
   return listings.filter(l=>(filter==="all"||l.status===filter)&&(!typeF||catOf(l.type)===typeF)&&(!dealF||dealOf(l)===dealF||dealOf(l)==="both")&&(!s||[l.ref,l.title,l.unitNo,l.address,l.area,l.owner?.name,l.owner?.phone,typeLabel(l.type,lang,l.typeOther)].join(" ").toLowerCase().includes(s)));
 }
 function renderList(){
-  $("#renew").innerHTML=viewBanner()+renewBanner();
+  $("#renew").innerHTML=banners();
   const tb=t("b");
-  $("#tabs").innerHTML=`<button type="button" role="tab" data-tab="listings" aria-selected="${tab==="listings"}">${esc(tb.tabL)}<b>${listings.length}</b></button><button type="button" role="tab" data-tab="bookings" aria-selected="${tab==="bookings"}">${esc(tb.tabB)}<b>${bookings.length}</b></button><button type="button" role="tab" data-tab="viewings" aria-selected="${tab==="viewings"}">${esc(vt("tab"))}<b>${viewings.filter(vUpcoming).length}</b></button>`;
+  const TABS=[["listings",tb.tabL,listings.length,0],["leads",ldt("tab"),leads.length,leads.filter(ldDue).length,"leads"],["viewings",vt("tab"),viewings.filter(vUpcoming).length,0,"viewings"],["bookings",tb.tabB,bookings.length,0,"bookings"]].filter(x=>!x[4]||on(x[4]));
+  if(!TABS.some(x=>x[0]===tab))tab="listings";
+  $("#tabs").innerHTML=TABS.map(([k,lab,n,d])=>`<button type="button" role="tab" data-tab="${k}" aria-selected="${tab===k}">${esc(lab)}${d?`<span class="tdot">${d}</span>`:`<b>${n}</b>`}</button>`).join("");
   $("#chips").hidden=$("#typeWrap").hidden=tab!=="listings";
   if(tab==="bookings")return renderBookings();
   if(tab==="viewings")return renderViewings();
+  if(tab==="leads")return renderLeads();
   const c={all:listings.length};for(const k in L.zh.st)c[k]=listings.filter(l=>l.status===k).length;
   $("#chips").innerHTML=[["all",t("all")],...Object.entries(t("st"))].map(([k,v])=>`<button type="button" class="chip" data-f="${k}" aria-pressed="${filter===k}">${esc(v)}<b>${c[k]}</b></button>`).join("");
   $("#addBtn").hidden=!canWrite||!db;
   const el=$("#list");
   if(!db){el.innerHTML=`<div class="empty"><div class="ico">${ICON_HOUSE}</div><h2>${t("noDbT")}</h2><p>${t("noDbP")}</p></div>`;return}
   if(failed){el.innerHTML=`<div class="empty"><h2>${t("failT")}</h2><p>${t("failP")}</p></div>`;return}
-  if(!loaded){el.innerHTML=`<div class="empty"><p>${t("loading")}</p></div>`;return}
+  if(!loaded){el.innerHTML=skeletonGrid();return}
   if(!listings.length){el.innerHTML=`<div class="empty"><div class="ico">${ICON_HOUSE}</div><h2>${t("emptyT")}</h2><p>${esc(t("emptyP"))}</p>${canWrite?`<button class="btn primary" type="button" data-act="add">${t("emptyBtn")}</button>`:""}</div>`;return}
   const items=filtered();
   if(!items.length){el.innerHTML=`<div class="empty"><h2>${t("noMatchT")}</h2><p>${t("noMatchP")}</p></div>`;return}
@@ -580,7 +654,7 @@ function renderDetail(){
       <div class="big-title">${esc(l.title||t("untitled"))}</div>
       <div class="addr">${(l.unitNo||l.address)?`<span title="${esc(t("addrPrivate"))}">${LOCK} ${esc([l.unitNo,l.address].filter(Boolean).join(", "))}</span>${l.area?" · ":""}`:""}${esc(l.area||"")}</div>
     </div>
-    <div class="panel share-cta"><p>${esc(t("shareP"))}</p><div class="actions"><button class="btn primary" type="button" data-act="share">${ICON_SHIELD}${t("share")}</button>${canWrite&&l.status!=="sold"?`<button class="btn" type="button" data-act="new-viewing">${vt("add")}</button>`:""}</div></div>
+    ${on("share")||(on("viewings")&&canWrite&&l.status!=="sold")?`<div class="panel share-cta"><p>${esc(t("shareP"))}</p><div class="actions">${on("share")?`<button class="btn primary" type="button" data-act="share">${ICON_SHIELD}${t("share")}</button>`:""}${on("viewings")&&canWrite&&l.status!=="sold"?`<button class="btn" type="button" data-act="new-viewing">${vt("add")}</button>`:""}</div></div>`:""}
     <div class="panel"><h3>${t("prop")}</h3><dl class="facts">${factsHTML(l)}</dl>${l.description?`<p class="desc" style="margin-top:14px">${esc(l.description)}</p>`:""}</div>
     <div class="panel private"><h3>${t("ownerInfo")} <span class="lock-tag">${LOCK}${t("internalOnly")}</span></h3>
       <div class="owner-card"><div class="avatar">${esc((o.name||"?").trim().charAt(0))}</div>
@@ -591,7 +665,8 @@ function renderDetail(){
       ${privExtra(l)}
       ${l.remarks||o.notes?`<dl class="remark"><dt>${t("remark")}</dt><dd class="desc">${esc(l.remarks||o.notes)}</dd></dl>`:""}
     </div>
-    ${bookingPanel(l)}
+    ${ldPanel(l)}
+    ${on("bookings")?bookingPanel(l):""}
     ${canWrite?(confirming?`<div class="confirm"><p>${t("delQ")}</p><button class="btn" type="button" data-act="cancel-del">${t("cancel")}</button><button class="btn solid-danger" type="button" data-act="do-del">${t("delYes")}</button></div>`
       :`<div class="actions"><button class="btn danger" type="button" data-act="del">${t("del")}</button></div>`):""}
     <p class="hint">${l.createdAt?t("added")+" "+new Date(l.createdAt).toLocaleDateString(t("locale")):""}${l.updatedAt&&l.updatedAt!==l.createdAt?" · "+t("updated")+" "+new Date(l.updatedAt).toLocaleDateString(t("locale")):""}</p>
@@ -625,7 +700,7 @@ function buildMsg(l,lg,inclAddr,inclRef){
   out.push("");out.push(m.interested);
   return out.join("\n").replace(/\n{3,}/g,"\n\n");
 }
-function openShare(){share={lang,ch:"wa",fmt:"text",inclPhotos:true,inclRef:false,text:null,edited:false,saved:{}};mode="share";renderShare()}
+function openShare(){share={lang,ch:"wa",fmt:"text",inclPhotos:true,inclRef:false,text:null,edited:false,saved:{},custName:"",custPhone:"",followOn:true,followAt:localDT(defFollow()),leadId:null};mode="share";renderShare()}
 function renderShare(){
   const l=listings.find(x=>x.id===openId);if(!l){closeSheet();return}
   if(!share.edited)share.text=buildMsg(l,share.lang,false,share.inclRef);
@@ -633,6 +708,7 @@ function renderShare(){
   $("#sheet").innerHTML=`<div class="sheet-bar"><div class="wrap"><button class="btn ghost" type="button" data-act="back-detail">‹ ${t("back")}</button><h2>${t("shareT")}</h2></div></div>
   <div class="wrap sheet-main">
     <div class="safe">${ICON_SHIELD}<span>${esc(t("safe"))}</span></div>
+    ${shareLeadPanel()}
     <div class="panel" style="display:flex;flex-direction:column;gap:14px"><div class="optrow">
       <span class="lbl">${t("fmt")}</span><div class="langs" role="group" aria-label="${t("fmt")}"><button type="button" data-fmt="text" aria-pressed="${share.fmt==="text"}">${t("fmtText")}</button><button type="button" data-fmt="pdf" aria-pressed="${share.fmt==="pdf"}">${t("fmtPdf")}</button></div></div>
       <div class="optrow">
@@ -644,7 +720,7 @@ function renderShare(){
     </div></div>
     <div class="panel" ${share.fmt==="pdf"?"":"hidden"}><h3>${t("pdfT")}</h3>
       <p class="hint" style="margin:0 0 12px">${esc(t("pdfHint"))}</p>
-      <div class="actions"><button class="btn primary" type="button" data-act="make-pdf" id="pdfBtn" ${downloads&&window.jspdf&&window.html2canvas?"":"disabled"}>${t("makePdf")}</button><a class="btn" id="openApp" href="${chUrl(share.ch,L[share.lang].m.pdfMsg)}" target="_blank" rel="noopener" data-act="ch-open">${t("openApp").replace("{x}",t("chN")[share.ch])}</a></div>
+      <div class="actions"><button class="btn primary" type="button" data-act="make-pdf" id="pdfBtn" ${downloads&&window.jspdf&&window.html2canvas?"":"disabled"}>${t("makePdf")}</button><a class="btn" id="openApp" href="${chTo(share.ch,L[share.lang].m.pdfMsg)}" target="_blank" rel="noopener" data-act="ch-open">${t("openApp").replace("{x}",t("chN")[share.ch])}</a></div>
       ${downloads?"":`<p class="err" style="margin-top:10px">${t("pdfNoDl")}</p>`}
     </div>
     <div class="panel" ${share.fmt==="text"?"":"hidden"}><h3>${t("msgT")}</h3>
@@ -658,13 +734,13 @@ function renderShare(){
       ${downloads&&ph.length>1&&window.JSZip?`<div class="actions" style="margin-top:10px"><button class="btn" type="button" data-act="save-all" id="saveAll">${t("saveAll")}</button></div>`:""}
     </div>`:""}
   </div>`;
-  updateWa();showSheet();
+  updateWa();showSheet();bindShareLead();
   $("#msg").addEventListener("input",e=>{share.text=e.target.value;share.edited=true;updateWa()});
   const cp=$("#inclPhotos");if(cp)cp.addEventListener("change",e=>{share.inclPhotos=e.target.checked});
   const cr=$("#inclRef");if(cr)cr.addEventListener("change",e=>{share.inclRef=e.target.checked;share.edited=false;renderShare()});
 }
 function chUrl(ch,text){const e=encodeURIComponent(text||"");return ch==="line"?"https://line.me/R/share?text="+e:ch==="wc"?"weixin://":"https://wa.me/?text="+e}
-function updateWa(){const a=$("#sendBtn");if(a)a.href=chUrl(share.ch,share.text)}
+function updateWa(){const a=$("#sendBtn");if(a)a.href=chTo(share.ch,share.text);const o=$("#openApp");if(o)o.href=chTo(share.ch,L[share.lang].m.pdfMsg)}
 async function photoBlob(id){
   try{const r=await fetch(img(id));if(r.ok)return await r.blob()}catch(_){}
   const im=new Image();im.src=img(id);await im.decode();
@@ -840,12 +916,13 @@ function vTimes(v){
   const setT=(base,s,def)=>{const d=new Date(base);const [h,m]=String(s||def).split(":");d.setHours(+h||0,+m||0,0,0);return d};
   const r1=setT(new Date(at.getTime()-864e5),v.eveTime,"21:00");
   let r2=setT(at,v.mornTime,"09:00");if(r2.getTime()>at.getTime()-60*6e4)r2=new Date(at.getTime()-90*6e4);
-  const r3=new Date(at.getTime()-(Number(v.travelMin)||30)*6e4);
+  const r3=new Date(at.getTime()-(Number(v.lastMin)||Number(rem("lastMin"))||120)*6e4);
+  if(r2.getTime()>r3.getTime()-45*6e4)r2=new Date(Math.max(r3.getTime()-60*6e4,setT(at,"07:00").getTime()));
   return {at,r:[r1,r2,r3]};
 }
 function vWhen(d){const today=isoLocal(new Date()),day=isoLocal(d),tm=isoLocal(new Date(Date.now()+864e5));return `${day===today?vt("today"):day===tm?vt("tomorrow"):fmtDate(day)} ${hm(d)}`}
 function vState(v,i){const s=v["r"+(i+1)+"Sent"];if(s)return"sent";const {at,r}=vTimes(v),now=Date.now();if(now>at.getTime())return"passed";return now>=r[i].getTime()?"due":"later"}
-function vMsg(v,i,lg){const {at}=vTimes(v),D=L[lg].v;return D.msg[i]({name:v.custName||"",date:fmtDate(v.date,lg),time:hm(at),title:v.listingTitle||"",area:v.area||"",meet:v.meet||v.area||"—"})}
+function vMsg(v,i,lg){const {at}=vTimes(v),D=L[lg].v,x={name:v.custName||"",date:fmtDate(v.date,lg),time:hm(at),title:v.listingTitle||"",area:v.area||"",meet:v.meet||v.area||"—"},tp=appCfg.tpl?.["v"+i];return tp?fillTpl(tp,x):D.msg[i](x)}
 function vWa(v,i){const p=waPhone(v.custPhone);return p?`${p}?text=${encodeURIComponent(vMsg(v,i,v.lang||lang))}`:""}
 const vUpcoming=v=>(v.status||"scheduled")==="scheduled"&&Date.now()<=vTimes(v).at.getTime()+3*36e5;
 function vChips(v){return [0,1,2].map(i=>{const s=vState(v,i);return `<span class="vchip vc-${s}" title="${esc(vt("r")[i])}">${s==="sent"?"✓":i+1}</span>`}).join("")}
@@ -891,11 +968,11 @@ function renderViewing(){
   </div>`;
   showSheet();
 }
-const VF=["listingId","custName","custPhone","date","time","meet","travelMin","eveTime","mornTime","lang","note"];
-function openViewingForm(editId,listingId){
+const VF=["listingId","custName","custPhone","date","time","meet","lastMin","eveTime","mornTime","lang","note"];
+function openViewingForm(editId,listingId,preset){
   const v=editId?viewings.find(x=>x.id===editId):null;
-  const base=v?Object.fromEntries(VF.map(k=>[k,v[k]??""])):{listingId:listingId||"",custName:"",custPhone:"",date:isoLocal(new Date(Date.now()+864e5)),time:"11:00",meet:"",travelMin:30,eveTime:"21:00",mornTime:"09:00",lang,note:""};
-  vform={editId:editId||null,base,draft:null,back:editId?"v":listingId?"l":""};mode="vform";renderViewingForm();
+  const base=v?Object.fromEntries(VF.map(k=>[k,v[k]??""])):{listingId:listingId||"",custName:"",custPhone:"",date:isoLocal(new Date(Date.now()+864e5)),time:"11:00",meet:"",lastMin:rem("lastMin"),eveTime:rem("eve"),mornTime:rem("morn"),lang,note:"",leadId:"",...(preset||{})};if(v){base.leadId=v.leadId||"";if(!has(v.lastMin))base.lastMin=rem("lastMin")}
+  vform={editId:editId||null,base,draft:null,back:editId?"v":preset?.leadId?"ld":listingId?"l":""};mode="vform";renderViewingForm();
 }
 const vval=k=>vform.draft&&k in vform.draft?vform.draft[k]:(vform.base[k]??"");
 function captureVDraft(){if(!vform)return;vform.draft={};for(const k of VF){const e=document.getElementById("v_"+k);if(e)vform.draft[k]=e.value}}
@@ -915,7 +992,7 @@ function renderViewingForm(){
     </div></div>
     <div class="panel"><h3>${vt("r").join(" · ")}</h3><div class="fields">
       ${fi("eveTime",vt("eve"),'type="time"')}${fi("morn"+"Time",vt("morn"),'type="time"')}
-      ${fi("travelMin",vt("travel"),'type="number" inputmode="numeric" min="0" step="5"')}
+      ${fi("lastMin",vt("last"),'type="number" inputmode="numeric" min="0" step="10"')}
       <label class="f">${vt("msgLang")}<select id="v_lang">${LANG_ORDER.map(k=>`<option value="${k}" ${vval("lang")===k?"selected":""}>${L[k].name}</option>`).join("")}</select></label>
       <p class="hint full" style="margin:0">${esc(vt("pushNote"))}</p></div></div>
     <div class="panel private"><h3>${vt("note")} <span class="lock-tag">${LOCK}${t("internalOnly")}</span></h3><div class="fields"><label class="f full"><textarea id="v_note">${esc(vval("note"))}</textarea></label></div></div>
@@ -934,14 +1011,15 @@ async function saveViewing(e){
   if(!g("date")||!g("time")){err.textContent=vt("eDate");return}
   const l=listings.find(x=>x.id===g("listingId"))||{},prev=viewings.find(x=>x.id===vform.editId),now=Date.now();
   const data={listingId:g("listingId"),listingTitle:l.title||prev?.listingTitle||"",listingRef:l.ref||"",area:l.area||"",custName:g("custName"),custPhone:g("custPhone"),date:g("date"),time:g("time"),meet:g("meet"),
-    travelMin:Number(g("travelMin"))||30,eveTime:g("eveTime")||"21:00",mornTime:g("mornTime")||"09:00",lang:g("lang")||lang,note:g("note"),status:prev?.status||"scheduled",
+    lastMin:Number(g("lastMin"))||Number(rem("lastMin"))||120,eveTime:g("eveTime")||rem("eve"),mornTime:g("mornTime")||rem("morn"),lang:g("lang")||lang,note:g("note"),status:prev?.status||"scheduled",leadId:vform.base.leadId||prev?.leadId||"",asked:"",outcome:prev?.outcome||"",
     r1Sent:"",r2Sent:"",r3Sent:"",alerted:[],createdAt:prev?.createdAt||now,updatedAt:now};
-  if(prev&&prev.date===data.date&&prev.time===data.time){data.r1Sent=prev.r1Sent||"";data.r2Sent=prev.r2Sent||"";data.r3Sent=prev.r3Sent||"";data.alerted=prev.alerted||[]}
+  if(prev&&prev.date===data.date&&prev.time===data.time){data.r1Sent=prev.r1Sent||"";data.r2Sent=prev.r2Sent||"";data.r3Sent=prev.r3Sent||"";data.alerted=prev.alerted||[];data.asked=prev.asked||""}
+  if(!data.leadId){const ex=findLead(data.listingId,data.custPhone);if(ex)data.leadId=ex.id}
   const btn=$("#vSave");btn.disabled=true;
-  try{const ref=vform.editId?db.collection("viewings").doc(vform.editId):db.collection("viewings").doc();await ref.set(data);vform=null;toast(vt("saved"));openViewing(ref.id)}
+  try{const ref=vform.editId?db.collection("viewings").doc(vform.editId):db.collection("viewings").doc();await ref.set(data);if(data.leadId&&leads.some(x=>x.id===data.leadId))ldUpdate(data.leadId,{status:"viewing",viewingId:ref.id,followAt:""});vform=null;toast(vt("saved"));openViewing(ref.id)}
   catch(e2){btn.disabled=false;err.textContent=t("eSave")}
 }
-function cancelVForm(){const b=vform?.back,id=vform?.editId,lid=vform?.base?.listingId;vform=null;if(b==="v")openViewing(id);else if(b==="l"&&lid)openDetail(lid);else closeSheet()}
+function cancelVForm(){const b=vform?.back,id=vform?.editId,lid=vform?.base?.listingId,ld=vform?.base?.leadId;vform=null;if(b==="v")openViewing(id);else if(b==="ld"&&ld&&leads.some(x=>x.id===ld))openLead(ld);else if(b==="l"&&lid)openDetail(lid);else closeSheet()}
 async function vUpdate(id,upd){try{await db.collection("viewings").doc(id).update({...upd,updatedAt:Date.now()})}catch(e){toast(t("eSave"))}}
 async function deleteViewing(){try{await db.collection("viewings").doc(vOpen).delete();toast(vt("deleted"));closeSheet()}catch(e){toast(t("delFail"));vConfirm=false;renderViewing()}}
 
@@ -969,6 +1047,7 @@ function sampleText(k,type,lg=lang){
   return L[lg].pt.intro+"\n\n"+SFIELDS[`${who}_${type==="company"?"company":"ind"}`].map(f=>`${SEN[f]}${loc?" / "+loc[f]:""}: `).join("\n");
 }
 function sampleBox(k,type,phone){
+  if(!on("paste"))return"";
   const txt=sampleText(k,type),p=waPhone(phone);
   return `<details class="full sample"><summary>${esc(ptt("sampleT"))}</summary><pre class="vmsg" id="smp_${k}" style="margin-top:8px">${esc(txt)}</pre>
    <div class="actions" style="margin-top:8px"><button class="btn mini" type="button" data-scopy="${k}">${esc(ptt("copySample"))}</button><a class="btn mini" href="${p?p+"?text=":"https://wa.me/?text="}${encodeURIComponent(txt)}" target="_blank" rel="noopener">${esc(ptt("waSample"))}</a></div>
@@ -989,7 +1068,7 @@ let sampleFn=null;
 const PASTE_MAP={l:{company:"b_l_company",reg:"b_l_reg",desig:"b_l_desig",caddr:"b_l_address",name:"b_l_name",ic:"b_l_ic",phone:"b_l_phone",email:"b_l_email",address:"b_l_address",bank:"b_l_bank",acct:"b_l_acct"},
  t:{company:"b_t_company",reg:"b_t_reg",desig:"b_t_desig",caddr:"b_t_address",name:"b_t_name",ic:"b_t_ic",nat:"b_t_nat",phone:"b_t_phone",email:"b_t_email",job:"b_t_job",address:"b_t_address",occ:"b_t_occ",emName:"b_t_emName",emPhone:"b_t_emPhone"},
  o:{company:"ocomp",reg:"oreg",desig:"odesig",caddr:"oaddr",name:"oname",phone:"ophone",email:"oemail",ic:"oic",address:"oaddr"}};
-function pasteBox(k){return `<div class="full pastebox"><label class="f">${esc(t("pasteT"))}<textarea id="pt_${k}" rows="4" placeholder="${esc(t("pastePh")[k])}"></textarea></label><div class="actions" style="margin-top:8px;align-items:center"><button class="btn mini primary" type="button" data-paste="${k}">${esc(t("pasteBtn"))}</button><span class="hint" id="ps_${k}" style="margin:0"></span></div></div>`}
+function pasteBox(k){if(!on("paste"))return"";return `<div class="full pastebox"><label class="f">${esc(t("pasteT"))}<textarea id="pt_${k}" rows="4" placeholder="${esc(t("pastePh")[k])}"></textarea></label><div class="actions" style="margin-top:8px;align-items:center"><button class="btn mini primary" type="button" data-paste="${k}">${esc(t("pasteBtn"))}</button><span class="hint" id="ps_${k}" style="margin:0"></span></div></div>`}
 const BANKS=["Maybank","CIMB","Public Bank","RHB","Hong Leong","AmBank","UOB","OCBC","HSBC","Bank Islam","BSN","Alliance","Affin","Standard Chartered","Bank Rakyat","Agrobank","Bank Muamalat","MBSB"];
 function parseLocal(text){
   const o={},lines=String(text).split(/\r?\n/).map(x=>x.trim()).filter(Boolean),used=new Set();
@@ -1136,8 +1215,9 @@ function coverHTML(k,small){
 }
 function renderCover(){
   const el=$("#cover");if(!el)return;
+  if(!on("cover")){el.innerHTML="";el.hidden=true;return}el.hidden=false;
   const k=cvActive();
-  el.innerHTML=`<div class="cv-wrap">${coverHTML(k)}${canWrite&&db?`<button class="cv-gear" type="button" data-act="covers" aria-label="${esc(cvt("setT"))}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>${esc(cvt("set"))}</button>`:""}</div>`;
+  el.innerHTML=`<div class="cv-wrap">${coverHTML(k)}</div>`;
 }
 function openCovers(){mode="covers";renderCovers()}
 function renderCovers(){
@@ -1149,7 +1229,7 @@ function renderCovers(){
       ${k==="sunny"?"":`<label class="check" style="margin-top:6px"><input type="checkbox" data-cvon="${k}" ${cvOn(k)?"checked":""}>${esc(cvt("on"))}</label>`}${dates}
       <div class="actions" style="margin-top:8px">${assets?`<button class="btn mini" type="button" data-cvup="${k}">${esc(cvt("up"))}</button>`:""}${it.img?`<button class="btn mini ghost" type="button" data-cvreset="${k}">${esc(cvt("reset"))}</button>`:""}<span class="hint" id="cvst_${k}"></span></div></div></div>`;
   }).join("");
-  $("#sheet").innerHTML=`<div class="sheet-bar"><div class="wrap"><button class="btn ghost" type="button" data-act="close">‹ ${t("back")}</button><h2>${esc(cvt("setT"))}</h2></div></div>
+  $("#sheet").innerHTML=`<div class="sheet-bar"><div class="wrap"><button class="btn ghost" type="button" data-act="open-settings">‹ ${t("back")}</button><h2>${esc(cvt("setT"))}</h2></div></div>
   <div class="wrap sheet-main"><p class="hint" style="margin:0">${esc(cvt("hint"))}</p>${rows}<input type="file" id="cvFile" accept="image/*" hidden></div>`;
   showSheet();
 }
@@ -1274,7 +1354,7 @@ function locrBlocks(b){
   const tenantLine=isCo(T_)?`${e(T_.company.toUpperCase())}${T_.reg?" ("+e(T_.reg)+")":""} - ${e((T_.name||"").toUpperCase())}`:e((T_.name||"").toUpperCase());
   const item=(r,label,amt)=>`<tr><td style="width:34px;text-align:right;padding:1px 8px 1px 0;vertical-align:top">${r}.</td>${amt===undefined?`<td colspan="2" style="padding:1px 0;text-align:justify">${label}</td>`:`<td style="padding:1px 0">${label}</td><td style="text-align:right;white-space:nowrap;padding:1px 0 1px 12px;vertical-align:top">${amt}</td>`}</tr>`;
   const cl=(nr,html)=>`<div style="display:flex;gap:8px;${J}"><div style="width:22px;flex:none;text-align:right">${nr}.</div><div style="flex:1">${html}</div></div>`;
-  const {total}=bTotals(b);
+  const {total}=bTotals(b),ow=b.earnBy==="owner";
   const blocks=[
 `<div style="${J}">For the avoidance of doubt, by executing this Offer to Rent Form, both the Tenant(s) and the Landlord(s) unequivocally agree that all the terms and conditions of this Letter shall be read together and apply to both parties, with ${B(RM(b.rent))} as the agreed monthly rental.</div>`,
 `<div>Property Address: ${B(e((b.listingAddress||"").toUpperCase()))}</div><div style="margin-top:6px">Tenant(s): ${B(tenantLine)}</div><div style="margin-top:6px">NRIC/Passport No: ${B(e(T_.ic||""))}</div>`,
@@ -1293,17 +1373,17 @@ ${item("x","Fittings &amp; Furnishing: The rental shall include the property's f
 ${item("xi","Disbursement Cost: The Tenant shall bear all costs incurred in the preparation and stamping of the Tenancy Agreement.")}
 ${item("xii","Vacant Possession: Delivery of vacant possession shall be upon payment of the Total Outstanding stated above.")}
 </table>`),
-cl(2,`Execution: I/We agree to execute the Tenancy Agreement within ${B(e(String(b.execDays||"14")))} working days from the date of the Landlord's acceptance (${B('"Execution Period"')}), failing which only the above Earnest Deposit shall be forfeited. If any sums beyond the Earnest Deposit have been paid to the Landlord, the Landlord shall refund them to the Agent as stakeholder within five (5) working days from the expiry of the Execution Period, failing which interest at the rate of ${has(b.interest)?B(e(String(b.interest))):"______"}% per annum shall be charged on such sums, and the Tenant shall be at liberty to commence legal proceedings against the Landlord to recover such sums and interest at the Landlord's cost. For the avoidance of doubt, in such an instance the parties agree that the Agent shall not be held responsible and shall be kept indemnified for any loss arising out of or in respect of the recovery process or any related process.`),
+cl(2,`Execution: I/We agree to execute the Tenancy Agreement within ${B(e(String(b.execDays||"14")))} working days from the date of the Landlord's acceptance (${B('"Execution Period"')}), failing which only the above Earnest Deposit shall be forfeited. If any sums beyond the Earnest Deposit have been paid to the Landlord, the Landlord shall refund them to ${ow?"the Tenant":"the Agent as stakeholder"} within five (5) working days from the expiry of the Execution Period, failing which interest at the rate of ${has(b.interest)?B(e(String(b.interest))):"______"}% per annum shall be charged on such sums, and the Tenant shall be at liberty to commence legal proceedings against the Landlord to recover such sums and interest at the Landlord's cost. For the avoidance of doubt, in such an instance the parties agree that the Agent shall not be held responsible and shall be kept indemnified for any loss arising out of or in respect of the recovery process or any related process.`),
 cl(3,`Other Conditions: ${b.remarks?`<span style="white-space:pre-wrap">${e(b.remarks)}</span>`:"-"}`),
-cl(4,`The Tenant hereby pays the sum of ${B(RM(b.bookingFee))} by (${B(e(b.payMethod||"Bank Transfer"))}) to the Agent as stakeholder, being the Earnest Deposit towards the Total Outstanding for the above property. This Earnest Deposit shall form part of the payment towards the rental of the property. The Tenant irrevocably permits the Agent to bank in the payment prior to the Landlord's acceptance of this offer. If the Landlord rejects this offer, the Earnest Deposit shall be refunded to the Tenant within five (5) working days.`),
+cl(4,`The Tenant hereby pays the sum of ${B(RM(b.bookingFee))} by (${B(e(b.payMethod||"Bank Transfer"))}) ${ow?"directly to the Landlord":"to the Agent as stakeholder"}, being the Earnest Deposit towards the Total Outstanding for the above property. This Earnest Deposit shall form part of the payment towards the rental of the property. ${ow?"The Landlord acknowledges receipt of the Earnest Deposit. If the Landlord rejects this offer, the Landlord shall refund the Earnest Deposit to the Tenant within five (5) working days.":"The Tenant irrevocably permits the Agent to bank in the payment prior to the Landlord's acceptance of this offer. If the Landlord rejects this offer, the Earnest Deposit shall be refunded to the Tenant within five (5) working days."}`),
 cl(5,`The Tenant and the Landlord agree to fully indemnify the Agent against all claims by either party if, for any reason whatsoever, either party does not proceed to execute the Tenancy Agreement after the Earnest Deposit has been collected.`),
 cl(6,`The Tenant acknowledges that this offer is only effective upon final acceptance by the Landlord countersigning this Offer to Rent Form. The Landlord, being the registered owner or a person authorised by the registered owner of the above property, acknowledges that by countersigning this offer, the Landlord accepts the terms and conditions stated herein.`),
-cl(7,`The Landlord agrees to pay the Agent a total agency fee of ${B(n1(b.feeM))} month's rental plus ${B(has(b.sst)?Number(b.sst).toFixed(1):"___")}% SST, amounting to ${B(RM(b.feeAmt))}. The agency fee shall be payable immediately upon the signing of the Tenancy Agreement or upon the Tenant taking possession of the premises, whichever is earlier. The Landlord irrevocably instructs the Agent to deduct the agreed agency fee from the Earnest Deposit and to release the remaining Earnest Deposit (if any) to the Landlord and/or the Landlord's appointed lawyer upon the signing of the Tenancy Agreement.`),
+cl(7,`The Landlord agrees to pay the Agent a total agency fee of ${B(n1(b.feeM))} month's rental plus ${B(has(b.sst)?Number(b.sst).toFixed(1):"___")}% SST, amounting to ${B(RM(b.feeAmt))}. The agency fee shall be payable immediately upon the signing of the Tenancy Agreement or upon the Tenant taking possession of the premises, whichever is earlier. ${ow?"As the Earnest Deposit has been paid directly to the Landlord, the Landlord shall pay the agreed agency fee directly to the Agent upon the signing of the Tenancy Agreement.":"The Landlord irrevocably instructs the Agent to deduct the agreed agency fee from the Earnest Deposit and to release the remaining Earnest Deposit (if any) to the Landlord and/or the Landlord's appointed lawyer upon the signing of the Tenancy Agreement."}`),
 cl(8,`If, after accepting this offer and the Earnest Deposit, and not due to any dispute relating to the terms of the Tenancy Agreement, the Landlord refuses to rent the premises to the Tenant, the Landlord agrees to immediately refund the Earnest Deposit to the Tenant together with agreed liquidated damages equal to the Earnest Deposit, and agrees to pay the Agent an amount equal to 50% of the above agency fee.`),
 cl(9,`If the transaction is aborted by the Tenant's refusal to proceed with the Tenancy Agreement for whatever reason after the Earnest Deposit is paid but before the Tenancy Agreement is signed, and not due to any dispute relating to the terms of the Tenancy Agreement, the Earnest Deposit shall be forfeited, and the Landlord agrees to pay the Agent a fee equal to 50% of the forfeited Earnest Deposit or 50% of the above agency fee, whichever is lower.`),
 cl(10,`All signatories to this document acknowledge and agree to comply with the Malaysian Anti-Corruption Commission Act 2009 (including Section 17A), the Anti-Money Laundering, Anti-Terrorism Financing and Proceeds of Unlawful Activities Act 2001 and the Personal Data Protection Act 2010, and authorise the Agent to disclose their information to third parties where necessary, including at the request of regulatory authorities.`),
 cl(11,`Each party represents and agrees that it has reviewed all aspects of this Form, fully understands its terms and conditions, has the authority to enter into this Form, and has executed it based on its own judgment, knowingly, voluntarily and without duress.`),
-cl(12,`All payments shall be made directly to the Agent. Bank: ${B(e((b.agBank||"____________").toUpperCase()))}, ACC NO: ${B(e(b.agAcct||"____________"))} (Client Account). Please ask for a receipt for the total amount paid and highlight any discrepancy between the receipt and the amount paid.`),
+cl(12,`${ow?"Save for the Earnest Deposit, which has been paid directly to the Landlord, all":"All"} payments shall be made directly to the Agent. Bank: ${B(e((b.agBank||"____________").toUpperCase()))}, ACC NO: ${B(e(b.agAcct||"____________"))} (Client Account). Please ask for a receipt for the total amount paid and highlight any discrepancy between the receipt and the amount paid.`),
 `<div style="margin-top:6px">This form is executed by the following parties:</div>`];
   const line=(k,v)=>`<tr><td style="width:120px;font-weight:700;padding:3px 0">${k}</td><td style="width:10px">:</td><td style="border-bottom:1px solid #111;font-weight:700;padding:3px 4px">${v?e(String(v).toUpperCase()):"&nbsp;"}</td></tr>`;
   const sigBox=rows=>`<table style="width:100%;border-collapse:collapse;font-size:12px">${rows}</table>`;
@@ -1691,7 +1771,7 @@ function bookingPanel(l){
 let agentPrefs={};
 const AG=["agBank","agAcct","agName","agRen","feeM","sst","execDays"];
 /* form */
-const BF=["no","date","status","start","termY","optY","rent","earnM","bookingFee","secM","secDep","utilM","utilDep","advM","advance","fees","disb","accDep","payMethod",
+const BF=["no","date","status","start","termY","optY","rent","earnM","bookingFee","earnBy","earnDate","keysDate","secM","secDep","utilM","utilDep","advM","advance","fees","disb","accDep","payMethod",
   "execDays","interest","feeM","sst","feeAmt","agBank","agAcct","agName","agRen",
   "l_type","l_company","l_reg","l_desig","l_name","l_ic","l_phone","l_email","l_address","l_bank","l_acct","l_wName","l_wIc",
   "t_type","t_company","t_reg","t_desig","t_name","t_ic","t_nat","t_phone","t_email","t_job","t_address","t_occ","t_emName","t_emPhone","remarks"];
@@ -1702,7 +1782,7 @@ function openBookingForm(editId){
   else{const l=listings.find(x=>x.id===openId)||{},rent=num(l.rent),o=l.owner||{};
     const feeM=has(agentPrefs.feeM)?agentPrefs.feeM:1,sst=has(agentPrefs.sst)?agentPrefs.sst:8;
     base={no:newBookingNo(),date:isoLocal(new Date()),status:"booked",start:"",termY:"",optY:"",rent:has(l.rent)?l.rent:"",
-      earnM:1,bookingFee:rent||"",secM:2,secDep:rent?rent*2:"",utilM:0.5,utilDep:rent?r2(rent*0.5):"",fees:"",disb:"",accDep:"",advM:1,advance:rent||"",t_type:"ind",payMethod:"Bank Transfer",
+      earnM:1,bookingFee:rent||"",secM:2,secDep:rent?rent*2:"",utilM:0.5,utilDep:rent?r2(rent*0.5):"",fees:"",disb:"",accDep:"",advM:1,advance:rent||"",t_type:"ind",payMethod:"Bank Transfer",earnBy:"agent",earnDate:isoLocal(new Date()),keysDate:"",
       execDays:has(agentPrefs.execDays)?agentPrefs.execDays:14,interest:"",feeM,sst,feeAmt:rent?r2(rent*feeM*(1+sst/100)):"",
       agBank:agentPrefs.agBank||"",agAcct:agentPrefs.agAcct||"",agName:agentPrefs.agName||"",agRen:agentPrefs.agRen||"",
       l_type:isCo(o)?"company":"ind",l_company:o.company||"",l_reg:o.reg||"",l_desig:o.desig||"",l_name:o.name||"",l_phone:o.phone||"",l_email:o.email||"",l_ic:o.ic||"",l_address:o.address||""};
@@ -1730,9 +1810,12 @@ function renderBookingForm(){
       <label class="f">${bt("start")} <span class="req">*</span><input id="b_start" type="date" value="${esc(bval("start"))}"></label>
       <label class="f">${bt("end")}<input id="b_end_view" disabled value="${esc(fmtDate(endDate(bval("start"),monthsOf(bval("termY")))))}"></label>
       <label class="f full">${bt("termL")} <small style="font-size:11px">${bt("termHint")}</small><span style="display:flex;align-items:center;gap:10px"><input id="b_termY" inputmode="decimal" style="flex:1" value="${esc(bval("termY"))}" aria-label="${esc(bt("termL"))}"><b style="font-size:18px">+</b><input id="b_optY" inputmode="decimal" style="flex:1" value="${esc(bval("optY"))}" aria-label="+"><span>${bt("yr")}</span></span></label>
+      <label class="f full">${esc(pyt("keysDate"))}<input id="b_keysDate" type="date" value="${esc(bval("keysDate"))}"><small style="font-size:12px">${esc(pyt("keysHint"))}</small></label>
       ${mo("rent",t("rent"),true)}<p class="hint full" style="margin:-6px 0 0">${bt("rentHint")}</p></div></div>
     <div class="panel"><h3>${bt("money")}</h3><div class="fields">
       ${mrow("earnM","bookingFee",bt("bookingFee"))}
+      <label class="f">${esc(pyt("earnBy"))}<select id="b_earnBy"><option value="agent" ${bval("earnBy")!=="owner"?"selected":""}>${esc(pyt("by").agent)}</option><option value="owner" ${bval("earnBy")==="owner"?"selected":""}>${esc(pyt("by").owner)}</option></select></label>
+      <label class="f">${esc(pyt("earnDate"))}<input id="b_earnDate" type="date" value="${esc(bval("earnDate"))}"></label>
       <p class="hint full" style="margin:6px 0 -4px;font-weight:500;color:var(--ink)">${bt("payBeforeKeys")}</p>
       ${mrow("advM","advance",bt("advance"))}${mrow("secM","secDep",bt("secDep"))}${mrow("utilM","utilDep",bt("utilDep"))}
       ${mo("accDep",bt("accDep"),true)}${mo("fees",bt("fees"))}${mo("disb",bt("disb"))}
@@ -1791,7 +1874,7 @@ async function saveBooking(e){
   const l=listings.find(x=>x.id===bform.listingId),prev=bookings.find(b=>b.id===bform.editId),now=Date.now();
   const data={listingId:bform.listingId||"",listingTitle:l?.title||prev?.listingTitle||"",listingRef:l?.ref||prev?.listingRef||"",listingAddress:l?[l.unitNo,l.address,l.area].filter(Boolean).join(", "):(prev?.listingAddress||""),
     no:g("no"),date:g("date"),status:g("status"),start:g("start"),termY:g("termY"),optY:g("optY"),months:monthsOf(g("termY")),end:endDate(g("start"),monthsOf(g("termY"))),rent:n("rent"),
-    earnM:g("earnM"),bookingFee:n("bookingFee"),secM:g("secM"),secDep:n("secDep"),utilM:g("utilM"),utilDep:n("utilDep"),fees:n("fees"),disb:n("disb"),accDep:n("accDep"),advM:g("advM"),advance:n("advance"),totalOut:"",payMethod:g("payMethod"),
+    earnM:g("earnM"),bookingFee:n("bookingFee"),earnBy:g("earnBy")||"agent",earnDate:g("earnDate"),keysDate:g("keysDate"),balPaid:prev?.balPaid||"",secM:g("secM"),secDep:n("secDep"),utilM:g("utilM"),utilDep:n("utilDep"),fees:n("fees"),disb:n("disb"),accDep:n("accDep"),advM:g("advM"),advance:n("advance"),totalOut:"",payMethod:g("payMethod"),
     execDays:g("execDays"),interest:g("interest"),feeM:g("feeM"),sst:g("sst"),feeAmt:n("feeAmt"),agBank:g("agBank"),agAcct:g("agAcct"),agName:g("agName"),agRen:g("agRen"),
     landlord:{type:g("l_type")||"ind",company:g("l_type")==="company"?g("l_company"):"",reg:g("l_type")==="company"?g("l_reg"):"",desig:g("l_type")==="company"?g("l_desig"):"",name:g("l_name"),ic:g("l_ic"),phone:g("l_phone"),email:g("l_email"),address:g("l_address"),bank:g("l_bank"),acct:g("l_acct"),wName:g("l_wName"),wIc:g("l_wIc")},
     tenant:{type:g("t_type")||"ind",company:g("t_type")==="company"?g("t_company"):"",reg:g("t_type")==="company"?g("t_reg"):"",desig:g("t_type")==="company"?g("t_desig"):"",name:g("t_name"),ic:g("t_ic"),nat:g("t_nat"),phone:g("t_phone"),email:g("t_email"),job:g("t_job"),address:g("t_address"),occ:n("t_occ"),emName:g("t_emName"),emPhone:g("t_emPhone")},
@@ -1831,10 +1914,11 @@ function renderBooking(){
     <div class="panel"><div class="head-row"><span class="pill b-${esc(st)}">${esc(bt("st")[st]||st)}</span><span class="ref-badge">${esc(b.no||"")}</span></div>
       <div class="big-title">${esc(b.listingTitle||"")}${listings.some(x=>x.id===b.listingId)?"":` <small class="hint">${bt("gone")}</small>`}</div>
       <div class="addr">${esc([b.listingRef?"#"+b.listingRef:"",b.listingAddress].filter(Boolean).join(" · "))}</div></div>
-    ${progressPanel(b)}
+    ${payPanel(b)}
+    ${on("progress")?progressPanel(b):""}
     ${downloads?`<div class="panel"><h3>${bt("pdfT")}</h3>${bpdfRow(b,"locr",bt("locr"),"both",bt("locrHint"))}${bpdfRow(b,"full",bt("verF"),"")}<p class="hint" style="margin:4px 0 0">${esc(bt("sendHint"))}</p></div>`:""}
-    ${renewPanel(b)}
-    <div class="panel share-cta"><p><b style="color:var(--ink)">${bt("agT")}</b>${b.agreement?` · <span class="pill b-signed">${bt("agHas")}</span>`:""}<br>${esc(bt("agP"))}</p><button class="btn primary" type="button" data-act="open-agree">${b.agreement?bt("agOpen"):bt("agBtn")}</button></div>
+    ${on("renewal")?renewPanel(b):""}
+    ${on("agreement")?`<div class="panel share-cta"><p><b style="color:var(--ink)">${bt("agT")}</b>${b.agreement?` · <span class="pill b-signed">${bt("agHas")}</span>`:""}<br>${esc(bt("agP"))}</p><button class="btn primary" type="button" data-act="open-agree">${b.agreement?bt("agOpen"):bt("agBtn")}</button></div>`:""}
     <div class="panel"><h3>${bt("tenancy")}</h3><dl class="facts">${f(bt("start"),esc(fmtDate(b.start)))}${f(bt("termL").replace(/[（(].*$/,""),esc(termStr(b)))}${f(bt("end"),esc(fmtDate(b.end)))}${f(t("rent"),m(b.rent))}${f(bt("date"),esc(fmtDate(b.date)))}</dl></div>
     <div class="panel"><h3>${bt("calcT")}</h3>${calcHTML(b)}<dl class="facts" style="margin-top:12px">${f(bt("fees"),m(b.fees))}${f(bt("disb"),m(b.disb))}${f(bt("payMethod"),esc(b.payMethod))}</dl></div>
     <div class="panel"><h3>${bt("execT")}</h3><dl class="facts">${f(bt("execDays"),esc(b.execDays))}${f(bt("interest"),esc(b.interest))}${f(bt("feeM"),esc(b.feeM))}${f(bt("sst"),esc(b.sst))}${f(bt("feeAmt"),m(b.feeAmt))}${f(bt("agBank"),esc(b.agBank))}${f(bt("agAcct"),esc(b.agAcct))}${f(bt("agName"),esc(b.agName))}${f(bt("agRen"),esc(b.agRen))}</dl></div>
@@ -1849,17 +1933,326 @@ function renderBooking(){
 }
 async function deleteBooking(){try{await db.collection("bookings").doc(bOpen).delete();toast(bt("deleted"));bOpen=null;if(openId)openDetail(openId);else closeSheet()}catch(e){toast(t("delFail"));bConfirm=false;renderBooking()}}
 
+
+/* ================= settings, feature toggles, leads & follow-up, payment summary ================= */
+const FEATS=["cover","langs","share","leads","viewings","bookings","payment","agreement","progress","renewal","paste"];
+let appCfg={features:{},rem:{},tpl:{}},appSaveT=null,leads=[],ldOpen=null,ldConfirm=false,payLang=null;
+const on=k=>appCfg.features?.[k]!==false;
+const REM_DEF={followDays:1,followTime:"10:00",eve:"21:00",morn:"09:00",lastMin:120,askAfter:60,againH:3};
+const rem=k=>{const v=appCfg.rem?.[k];return has(v)&&v!==""?v:REM_DEF[k]};
+const fillTpl=(s,x)=>String(s).replace(/\{(\w+)\}/g,(m,k)=>k in x?x[k]:m);
+const localDT=ms=>{const d=new Date(ms);return `${isoLocal(d)}T${hm(d)}`};
+const atTime=(d,s)=>{const x=new Date(d);const [h,m]=String(s||"10:00").split(":");x.setHours(+h||0,+m||0,0,0);return x.getTime()};
+const defFollow=()=>atTime(Date.now()+Number(rem("followDays"))*864e5,rem("followTime"));
+const normPh=p=>String(p||"").replace(/\D/g,"").replace(/^60/,"0");
+const GEAR='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>';
+
+/* viewing reminder 3 is now "before the viewing" (default 2 hours) */
+L.zh.v.r[2]="看房前提醒";L.zh.v.rHint[2]="看房前再提醒一次时间和见面地点（默认 2 小时前，可在设置改）。";L.zh.v.last="最后提醒：看房前几分钟";
+L.zh.v.msg[2]=x=>`您好 ${x.name}，提醒您今天 ${x.time} 看房：${x.title}${x.area?"（"+x.area+"）":""}。\n见面地点：${x.meet}。到了请联系我，待会见！`;
+L.ms.v.r[2]="Peringatan sebelum lawatan";L.ms.v.rHint[2]="Ingatkan sekali lagi masa dan tempat sebelum lawatan (asal 2 jam sebelum, boleh ubah dalam Tetapan).";L.ms.v.last="Peringatan akhir: berapa minit sebelum lawatan";
+L.ms.v.msg[2]=x=>`Salam ${x.name}, peringatan lawatan rumah hari ini jam ${x.time}: ${x.title}${x.area?" ("+x.area+")":""}.\nTempat berjumpa: ${x.meet}. Sila hubungi saya bila sampai. Jumpa nanti!`;
+L.en.v.r[2]="Before-viewing reminder";L.en.v.rHint[2]="Remind the time and meeting point once more before the viewing (2 hours before by default, change it in Settings).";L.en.v.last="Last reminder: minutes before the viewing";
+L.en.v.msg[2]=x=>`Hi ${x.name}, a reminder of your viewing today at ${x.time}: ${x.title}${x.area?" ("+x.area+")":""}.\nMeeting point: ${x.meet}. Please call me when you arrive. See you soon!`;
+
+Object.assign(L.zh,{
+ S:{T:"设置",feat:"功能开关",featHint:"关掉的功能会从首页和各页面隐藏，资料不会删除，随时可以再打开。",
+  f:{cover:["节日封面","首页上方的节日 / 季节图"],langs:["语言切换","右上角的国旗按钮"],share:["发资料给顾客","房源页的「发给顾客」"],leads:["顾客跟进","记录发给谁，到时提醒跟进"],viewings:["看房提醒","约看房、三次提醒、看房后跟进"],bookings:["租房交易","Offer to Rent Form 和交易记录"],payment:["付款摘要","总额、定金、余额和交钥匙日期"],agreement:["租约草稿","自动生成英文租约"],progress:["交易进度","签约、盖印花、交钥匙"],renewal:["续约提醒","租约到期前 2 个月提醒"],paste:["贴上自动填写","粘贴资料自动填和格式样本"]},
+  rem:"提醒时间",remHint:"新的看房和跟进会用这些时间，已经排好的不会变。",followDays:"发资料后几天跟进",followTime:"跟进提醒时间",eve:"看房前一晚提醒时间",morn:"看房当天早上提醒时间",lastMin:"最后提醒：看房前几分钟",askAfter:"看房后几分钟问结果",againH:"选「要跟进」后几小时再提醒",
+  tpl:"讯息模板",tplHint:"留空就用默认讯息（跟着讯息语言）。可用：{name} 顾客名字、{title} 房源、{area} 地区、{date} 日期、{time} 时间、{meet} 见面地点。",tplK:{v0:"看房前一晚",v1:"看房当天早上",v2:"看房前提醒",f0:"发资料后跟进",f1:"看房后跟进"},useDef:"填入默认讯息",clear:"清空",
+  agent:"代理资料",agentHint:"开新的 Offer to Rent Form 时自动带入。",covers:"节日封面",coversP:"每个节日用哪张图、什么日期显示",open:"打开",
+  backup:"资料备份",backupP:"网站版的资料只存在这台手机或电脑的浏览器里。请定期备份，换手机时用「还原备份」。",exp:"备份资料",imp:"还原备份",bkOk:(a,b)=>`已还原 ${a} 条资料、${b} 张照片`,bkBad:"这个文件不是备份文件",bkSaved:"备份文件已保存",saved:"已保存"},
+ ld:{tab:"顾客",panel:"获客记录",panelHint:"这个房源发给过谁、什么时候发的。",toT:"发给谁（记录跟进）",toHint:"填了电话，WhatsApp 会直接打开这位顾客的对话，并记录在「顾客」里。",cust:"顾客名字",ph:"顾客电话",follow:"提醒我跟进",
+  recorded:"已记录到「顾客」",sent:"发出",times:n=>`发了 ${n} 次`,st:{open:"跟进中",interested:"有兴趣",viewing:"已约看房",notInterested:"没兴趣",closed:"已成交"},
+  bannerT:"要跟进的顾客",askT:"看房结果",yesView:"有兴趣 · 约看房",next:"有兴趣 · 下一步",no:"没兴趣",later:n=>`${n} 小时后`,tomorrow:"明天",wa:"WhatsApp 问一问",done:"已跟进，不用再提醒",
+  none:"还没有顾客记录",noneP:"在房源页按「发给顾客」，填上顾客电话，发出后就会记录在这里。",due:"该跟进",active:"跟进中",ended:"已结束",nextAt:"下次提醒",noFollow:"没有提醒",history:"发送记录",setF:"改提醒时间",save:"保存",
+  del:"删除这个记录",delQ:"删除这个顾客记录？",deleted:"已删除",openListing:"打开房源",fmt:{text:"文字",pdf:"PDF"},stage:{sent:"发资料后",viewed:"看房后"},
+  viewedQ:x=>`${x.name} 看了 ${x.title}（${x.when}），觉得怎样？要跟进吗？`,fu:"要跟进",noshow:"顾客没来",
+  msg0:x=>`您好 ${x.name}，之前发给您的 ${x.title}${x.area?"（"+x.area+"）":""} 资料看了吗？有兴趣的话可以约个时间看房 😊`,
+  msg1:x=>`您好 ${x.name}，今天看的 ${x.title} 觉得怎样？有什么问题，或想再看一次，都可以跟我说。`},
+ pay:{T:"付款摘要",total:"总额",earn:"已付定金",by:{agent:"中介公司保管（stakeholder）",owner:"已付给屋主"},bal:"余额（交钥匙前付清）",keys:"交钥匙 / 入住日期",
+  paid:"余额已付清",unpaid:"余额未付",markPaid:"标记余额已付",unmark:"取消已付",left:n=>n>0?`还有 ${n} 天`:n===0?"就是今天":`已过 ${-n} 天`,
+  toT:"租客版",toL:"屋主版",waT:"WhatsApp 租客",waL:"WhatsApp 屋主",copyT:"复制租客版",copyL:"复制屋主版",msgLang:"讯息语言",hint:"租客版不含屋主资料；屋主版不含租客电话和资料。",
+  earnBy:"定金由谁收",earnDate:"定金付款日期",keysDate:"交钥匙 / 入住日期",keysHint:"余额要在这天前付清。留空就用租约开始日期。"}});
+Object.assign(L.ms,{
+ S:{T:"Tetapan",feat:"Hidup / matikan fungsi",featHint:"Fungsi yang dimatikan disembunyikan daripada halaman utama dan halaman lain. Data tidak dipadam dan boleh dihidupkan semula bila-bila masa.",
+  f:{cover:["Kulit perayaan","Gambar perayaan / musim di atas halaman utama"],langs:["Tukar bahasa","Butang bendera di atas"],share:["Hantar kepada pelanggan","Butang «Hantar kepada pelanggan»"],leads:["Susulan pelanggan","Rekod siapa dihantar dan ingatkan susulan"],viewings:["Peringatan lawatan","Atur lawatan, tiga peringatan, susulan selepas lawatan"],bookings:["Urusan sewa","Offer to Rent Form dan rekod urusan"],payment:["Ringkasan bayaran","Jumlah, deposit, baki dan tarikh serah kunci"],agreement:["Draf perjanjian","Perjanjian sewa automatik (Bahasa Inggeris)"],progress:["Kemajuan urusan","Tandatangan, setem, serah kunci"],renewal:["Peringatan sambung sewa","2 bulan sebelum tamat"],paste:["Tampal & isi automatik","Tampal maklumat dan format contoh"]},
+  rem:"Masa peringatan",remHint:"Lawatan dan susulan baharu guna masa ini; yang sudah diatur tidak berubah.",followDays:"Susulan selepas berapa hari",followTime:"Masa peringatan susulan",eve:"Masa peringatan malam sebelum lawatan",morn:"Masa peringatan pagi lawatan",lastMin:"Peringatan akhir: minit sebelum lawatan",askAfter:"Tanya keputusan berapa minit selepas lawatan",againH:"Selepas «Perlu susulan», ingatkan semula selepas berapa jam",
+  tpl:"Templat mesej",tplHint:"Biarkan kosong untuk guna mesej asal (ikut bahasa mesej). Boleh guna: {name} nama pelanggan, {title} rumah, {area} kawasan, {date} tarikh, {time} masa, {meet} tempat berjumpa.",tplK:{v0:"Malam sebelum lawatan",v1:"Pagi lawatan",v2:"Sebelum lawatan",f0:"Susulan selepas hantar maklumat",f1:"Susulan selepas lawatan"},useDef:"Isi mesej asal",clear:"Kosongkan",
+  agent:"Maklumat ejen",agentHint:"Diisi automatik bila buka Offer to Rent Form baharu.",covers:"Kulit perayaan",coversP:"Gambar dan tarikh untuk setiap perayaan",open:"Buka",
+  backup:"Sandaran data",backupP:"Data versi laman web hanya disimpan dalam pelayar telefon atau komputer ini. Sandarkan selalu, dan guna «Pulihkan sandaran» pada telefon baharu.",exp:"Sandarkan data",imp:"Pulihkan sandaran",bkOk:(a,b)=>`Dipulihkan ${a} rekod, ${b} gambar`,bkBad:"Fail ini bukan fail sandaran",bkSaved:"Fail sandaran disimpan",saved:"Disimpan"},
+ ld:{tab:"Pelanggan",panel:"Rekod pelanggan",panelHint:"Siapa yang sudah dihantar rumah ini dan bila.",toT:"Hantar kepada siapa (rekod susulan)",toHint:"Jika telefon diisi, WhatsApp terus membuka perbualan pelanggan ini dan direkod dalam «Pelanggan».",cust:"Nama pelanggan",ph:"Telefon pelanggan",follow:"Ingatkan saya untuk susulan",
+  recorded:"Direkod dalam «Pelanggan»",sent:"Dihantar",times:n=>`Dihantar ${n} kali`,st:{open:"Dalam susulan",interested:"Berminat",viewing:"Lawatan diatur",notInterested:"Tidak berminat",closed:"Berjaya"},
+  bannerT:"Pelanggan perlu disusul",askT:"Keputusan lawatan",yesView:"Berminat · Atur lawatan",next:"Berminat · Langkah seterusnya",no:"Tidak berminat",later:n=>`${n} jam lagi`,tomorrow:"Esok",wa:"WhatsApp tanya",done:"Sudah susul, tak perlu ingat lagi",
+  none:"Belum ada rekod pelanggan",noneP:"Di halaman rumah, tekan «Hantar kepada pelanggan», isi telefon pelanggan; selepas dihantar ia direkod di sini.",due:"Perlu susul",active:"Dalam susulan",ended:"Selesai",nextAt:"Peringatan seterusnya",noFollow:"Tiada peringatan",history:"Rekod hantar",setF:"Tukar masa peringatan",save:"Simpan",
+  del:"Padam rekod ini",delQ:"Padam rekod pelanggan ini?",deleted:"Dipadam",openListing:"Buka rumah",fmt:{text:"Teks",pdf:"PDF"},stage:{sent:"Selepas hantar maklumat",viewed:"Selepas lawatan"},
+  viewedQ:x=>`${x.name} sudah lawat ${x.title} (${x.when}). Bagaimana? Perlu susulan?`,fu:"Perlu susulan",noshow:"Pelanggan tidak datang",
+  msg0:x=>`Salam ${x.name}, sudah tengok maklumat ${x.title}${x.area?" ("+x.area+")":""} yang saya hantar? Jika berminat, kita boleh atur masa untuk lawat rumah 😊`,
+  msg1:x=>`Salam ${x.name}, bagaimana dengan ${x.title} yang dilawat tadi? Jika ada soalan atau mahu lawat sekali lagi, beritahu saya.`},
+ pay:{T:"Ringkasan bayaran",total:"Jumlah",earn:"Deposit tempahan dibayar",by:{agent:"Dipegang syarikat ejen (stakeholder)",owner:"Dibayar kepada pemilik"},bal:"Baki (sebelum serah kunci)",keys:"Tarikh serah kunci / masuk",
+  paid:"Baki sudah dibayar",unpaid:"Baki belum dibayar",markPaid:"Tanda baki sudah dibayar",unmark:"Batal",left:n=>n>0?`${n} hari lagi`:n===0?"Hari ini":`Lewat ${-n} hari`,
+  toT:"Versi penyewa",toL:"Versi pemilik",waT:"WhatsApp penyewa",waL:"WhatsApp pemilik",copyT:"Salin versi penyewa",copyL:"Salin versi pemilik",msgLang:"Bahasa mesej",hint:"Versi penyewa tiada maklumat pemilik; versi pemilik tiada telefon dan maklumat penyewa.",
+  earnBy:"Deposit tempahan diterima oleh",earnDate:"Tarikh bayar deposit tempahan",keysDate:"Tarikh serah kunci / masuk",keysHint:"Baki perlu dibayar sebelum tarikh ini. Kosong = tarikh mula sewa."}});
+Object.assign(L.en,{
+ S:{T:"Settings",feat:"Features",featHint:"A feature that is off is hidden from the home page and other pages. Its data is kept, and you can turn it back on any time.",
+  f:{cover:["Festive cover","Festive / seasonal picture at the top"],langs:["Language switch","Flag buttons at the top"],share:["Send to customers","The «Send to customer» button"],leads:["Customer follow-up","Record who you sent to and remind you to follow up"],viewings:["Viewing reminders","Viewings, three reminders, follow-up after viewing"],bookings:["Rental deals","Offer to Rent Form and deal records"],payment:["Payment summary","Total, earnest, balance and key handover date"],agreement:["Agreement draft","Auto-drafted tenancy agreement"],progress:["Deal progress","Signing, stamping, key handover"],renewal:["Renewal reminders","2 months before the tenancy ends"],paste:["Paste to auto-fill","Paste details and fill-in templates"]},
+  rem:"Reminder times",remHint:"New viewings and follow-ups use these times; ones already scheduled don't change.",followDays:"Follow up after how many days",followTime:"Follow-up reminder time",eve:"Night-before reminder time",morn:"Morning-of reminder time",lastMin:"Last reminder: minutes before the viewing",askAfter:"Ask how it went, minutes after the viewing",againH:"After «Follow up», remind again in how many hours",
+  tpl:"Message templates",tplHint:"Leave empty to use the default message (in the message language). You can use: {name} customer name, {title} listing, {area} area, {date} date, {time} time, {meet} meeting point.",tplK:{v0:"Night before viewing",v1:"Morning of viewing",v2:"Before viewing",f0:"Follow-up after sending details",f1:"Follow-up after viewing"},useDef:"Fill in default",clear:"Clear",
+  agent:"Agent details",agentHint:"Filled in automatically on each new Offer to Rent Form.",covers:"Festive covers",coversP:"Which picture and dates to show for each festival",open:"Open",
+  backup:"Data backup",backupP:"The website version keeps data only in this phone's or computer's browser. Back up regularly, and use «Restore backup» on a new phone.",exp:"Back up data",imp:"Restore backup",bkOk:(a,b)=>`Restored ${a} records and ${b} photos`,bkBad:"This file is not a backup",bkSaved:"Backup file saved",saved:"Saved"},
+ ld:{tab:"Customers",panel:"Customer records",panelHint:"Who this listing was sent to, and when.",toT:"Send to (record for follow-up)",toHint:"With a phone number, WhatsApp opens this customer's chat directly and the send is recorded under «Customers».",cust:"Customer name",ph:"Customer phone",follow:"Remind me to follow up",
+  recorded:"Recorded under «Customers»",sent:"Sent",times:n=>`Sent ${n} times`,st:{open:"Following up",interested:"Interested",viewing:"Viewing booked",notInterested:"Not interested",closed:"Closed"},
+  bannerT:"Customers to follow up",askT:"How did the viewing go?",yesView:"Interested · Book viewing",next:"Interested · Next step",no:"Not interested",later:n=>`In ${n} h`,tomorrow:"Tomorrow",wa:"WhatsApp to ask",done:"Followed up, no more reminders",
+  none:"No customer records yet",noneP:"On a listing, tap «Send to customer» and fill in the customer's phone; it's recorded here when you send.",due:"Follow up now",active:"Following up",ended:"Ended",nextAt:"Next reminder",noFollow:"No reminder",history:"Send history",setF:"Change reminder time",save:"Save",
+  del:"Delete this record",delQ:"Delete this customer record?",deleted:"Deleted",openListing:"Open listing",fmt:{text:"Text",pdf:"PDF"},stage:{sent:"After sending details",viewed:"After viewing"},
+  viewedQ:x=>`${x.name} viewed ${x.title} (${x.when}). How did it go? Follow up?`,fu:"Follow up",noshow:"Customer didn't come",
+  msg0:x=>`Hi ${x.name}, did you get a chance to look at the details of ${x.title}${x.area?" ("+x.area+")":""} I sent? If you're interested, we can arrange a viewing 😊`,
+  msg1:x=>`Hi ${x.name}, what did you think of ${x.title} today? If you have any questions or want another look, just let me know.`},
+ pay:{T:"Payment summary",total:"Total",earn:"Earnest deposit paid",by:{agent:"Held by the agency (stakeholder)",owner:"Paid to the landlord"},bal:"Balance (before key handover)",keys:"Key handover / move-in date",
+  paid:"Balance paid",unpaid:"Balance unpaid",markPaid:"Mark balance as paid",unmark:"Undo",left:n=>n>0?`${n} days left`:n===0?"Today":`${-n} days overdue`,
+  toT:"Tenant version",toL:"Landlord version",waT:"WhatsApp tenant",waL:"WhatsApp landlord",copyT:"Copy tenant version",copyL:"Copy landlord version",msgLang:"Message language",hint:"The tenant version has no landlord details; the landlord version has no tenant phone or details.",
+  earnBy:"Earnest received by",earnDate:"Earnest paid on",keysDate:"Key handover / move-in date",keysHint:"The balance must be paid by this date. Empty = tenancy start date."}});
+const st_=k=>t("S")[k],ldt=k=>t("ld")[k],pyt=k=>t("pay")[k];
+
+/* ---------- settings page ---------- */
+function saveApp(){clearTimeout(appSaveT);appSaveT=setTimeout(async()=>{try{await db.doc("settings/app").set(JSON.parse(JSON.stringify(appCfg)));toast(st_("saved"))}catch(e){toast(t("eSave"))}},450)}
+function openSettings(){mode="settings";renderSettings()}
+function tplDefault(k,lg=lang){const ph={name:"{name}",date:"{date}",time:"{time}",title:"{title}",area:"{area}",meet:"{meet}"};return k[0]==="v"?L[lg].v.msg[+k[1]](ph):L[lg].ld["msg"+k[1]](ph)}
+function renderSettings(){
+  const S=t("S"),dis=canWrite?"":"disabled";
+  const feats=FEATS.map(k=>`<label class="sw-row"><span><b>${esc(S.f[k][0])}</b><small>${esc(S.f[k][1])}</small></span><input type="checkbox" class="sw" data-feat="${k}" ${on(k)?"checked":""} ${dis}></label>`).join("");
+  const rf=(k,type,attrs="")=>`<label class="f">${esc(S[k])}<input data-rem="${k}" type="${type}" value="${esc(rem(k))}" ${attrs} ${dis}></label>`;
+  const tpls=Object.keys(S.tplK).map(k=>`<label class="f full">${esc(S.tplK[k])}<textarea data-tpl="${k}" rows="3" placeholder="${esc(tplDefault(k))}" ${dis}>${esc(appCfg.tpl?.[k]||"")}</textarea>
+     <span class="actions"><button class="btn mini" type="button" data-tpldef="${k}" ${dis}>${esc(S.useDef)}</button>${appCfg.tpl?.[k]?`<button class="btn mini" type="button" data-tplclr="${k}" ${dis}>${esc(S.clear)}</button>`:""}</span></label>`).join("");
+  const ag=(k,attrs="")=>`<label class="f">${esc(bt(k))}<input data-ag="${k}" value="${esc(agentPrefs[k]??"")}" ${attrs} ${dis}></label>`;
+  $("#sheet").innerHTML=`<div class="sheet-bar"><div class="wrap"><button class="btn ghost" type="button" data-act="close">‹ ${t("back")}</button><h2>${esc(S.T)}</h2></div></div>
+  <div class="wrap sheet-main">
+    <div class="panel"><h3>${esc(S.feat)}</h3><p class="hint" style="margin:-6px 0 6px">${esc(S.featHint)}</p><div class="sw-list">${feats}</div></div>
+    <div class="panel"><h3>${esc(S.rem)}</h3><div class="fields">
+      ${rf("followDays","number",'inputmode="numeric" min="0" step="1"')}${rf("followTime","time")}${rf("eve","time")}${rf("morn","time")}
+      ${rf("lastMin","number",'inputmode="numeric" min="0" step="10"')}${rf("askAfter","number",'inputmode="numeric" min="0" step="10"')}${rf("againH","number",'inputmode="numeric" min="1" step="1"')}
+      <p class="hint full" style="margin:0">${esc(S.remHint)}</p></div></div>
+    <div class="panel"><h3>${esc(S.tpl)}</h3><p class="hint" style="margin:-6px 0 12px">${esc(S.tplHint)}</p><div class="fields">${tpls}</div></div>
+    <div class="panel"><h3>${esc(S.agent)}</h3><div class="fields">
+      ${ag("agName")}${ag("agRen",'placeholder="PEA / REN"')}${ag("agBank",'placeholder="Maybank"')}${ag("agAcct",'inputmode="numeric"')}
+      ${ag("feeM",'inputmode="decimal"')}${ag("sst",'inputmode="decimal"')}${ag("execDays",'inputmode="numeric"')}
+      <p class="hint full" style="margin:0">${esc(S.agentHint)}</p></div></div>
+    ${canWrite?`<button type="button" class="panel set-link" data-act="covers"><span><b>${esc(S.covers)}</b><small>${esc(S.coversP)}</small></span><span aria-hidden="true">›</span></button>`:""}
+    ${window.__standalone?`<div class="panel"><h3>${esc(S.backup)}</h3><p class="hint" style="margin:-6px 0 12px">${esc(S.backupP)}</p><div class="actions"><button class="btn" type="button" data-act="bk-exp">${esc(S.exp)}</button><button class="btn" type="button" data-act="bk-imp">${esc(S.imp)}</button><input type="file" id="bkFile" accept="application/json,.json" hidden></div><p class="hint" id="bkMsg"></p></div>`:""}
+  </div>`;
+  showSheet();
+  const f=$("#bkFile");if(f)f.addEventListener("change",async e=>{const x=e.target.files[0];e.target.value="";if(!x)return;try{const r=await window.__standalone.importAll(await x.text());$("#bkMsg").textContent=st_("bkOk")(r.docs,r.photos);loadApp()}catch(err){$("#bkMsg").textContent=st_("bkBad")}});
+}
+async function backupExport(){try{const j=await window.__standalone.exportAll(),d=new Date();await downloads.save({filename:`prop-rental-backup-${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}.json`,data:new Blob([j],{type:"application/json"})});const m=$("#bkMsg");if(m)m.textContent=st_("bkSaved")}catch(e){if(e?.code!=="declined")toast(t("eSave"))}}
+document.addEventListener("change",e=>{
+  const el=e.target,d=el.dataset||{};
+  if(d.feat){appCfg.features={...appCfg.features,[d.feat]:el.checked};saveApp();renderChrome();renderList();return}
+  if(d.rem){appCfg.rem={...appCfg.rem,[d.rem]:el.type==="number"?(el.value===""?"":Number(el.value)):el.value};saveApp();return}
+  if(d.tpl!==undefined){appCfg.tpl={...appCfg.tpl,[d.tpl]:el.value.trim()};saveApp();return}
+  if(d.ag){agentPrefs={...agentPrefs,[d.ag]:el.value.trim()};db.doc("settings/agent").set(agentPrefs).then(()=>toast(st_("saved")),()=>toast(t("eSave")));return}
+});
+function loadApp(){if(!db)return;db.doc("settings/app").get().then(x=>{if(x.exists){const d=x.data()||{};appCfg={features:d.features||{},rem:d.rem||{},tpl:d.tpl||{}}}renderChrome();renderList();if(mode==="settings")renderSettings()}).catch(()=>{})}
+
+/* ---------- leads ---------- */
+const ldDue=l=>(l.status==="open"||l.status==="interested")&&l.followAt&&Date.now()>=l.followAt;
+function findLead(listingId,phone){const p=normPh(phone);return p?leads.find(x=>x.listingId===listingId&&normPh(x.custPhone)===p):null}
+function ldX(l){const li=listings.find(x=>x.id===l.listingId)||{};return{name:l.custName||"",title:li.title||l.listingTitle||"",area:li.area||l.area||"",date:"",time:"",meet:""}}
+function ldMsg(l,lg=l.lang||lang){const k=l.stage==="viewed"?"1":"0",tp=appCfg.tpl?.["f"+k],x=ldX(l);return tp?fillTpl(tp,x):L[lg].ld["msg"+k](x)}
+function ldWa(l){const p=waPhone(l.custPhone);return p?`${p}?text=${encodeURIComponent(ldMsg(l))}`:""}
+async function upsertLead(base,patch,hist){
+  const now=Date.now(),ex=findLead(base.listingId,base.custPhone);
+  try{
+    if(ex){const upd={...patch,updatedAt:now};if(base.custName&&!ex.custName)upd.custName=base.custName;if(hist)upd.history=[...(ex.history||[]),hist].slice(-30);if(hist)upd.lastSentAt=now;await db.collection("leads").doc(ex.id).update(upd);return ex.id}
+    const ref=db.collection("leads").doc();
+    await ref.set({listingId:base.listingId,listingTitle:base.listingTitle||"",listingRef:base.listingRef||"",area:base.area||"",custName:base.custName||"",custPhone:base.custPhone||"",lang:base.lang||lang,
+      sentAt:hist?now:"",lastSentAt:hist?now:"",history:hist?[hist]:[],stage:"sent",status:"open",followAt:"",viewingId:"",createdAt:now,...patch,updatedAt:now});
+    return ref.id;
+  }catch(e){toast(t("eSave"));return null}
+}
+async function recordLead(){
+  if(!share||!canWrite||!db||!on("leads"))return;
+  const ph=(share.custPhone||"").trim(),nm=(share.custName||"").trim();if(!ph&&!nm)return;
+  const now=Date.now();if(share.lastRec&&now-share.lastRec<20000)return;share.lastRec=now;
+  const l=listings.find(x=>x.id===openId);if(!l)return;
+  const fa=share.followOn&&share.followAt?new Date(share.followAt).getTime():"";
+  const base={listingId:l.id,listingTitle:l.title||"",listingRef:l.ref||"",area:l.area||"",custName:nm,custPhone:ph,lang:share.lang};
+  const id=await upsertLead(base,{followAt:isNaN(fa)?"":fa,status:"open",stage:"sent",lang:share.lang},{at:now,fmt:share.fmt,ch:share.ch});
+  if(id){share.leadId=id;toast(ldt("recorded"))}
+}
+function shareLeadPanel(){
+  if(!on("leads")||!canWrite)return"";
+  return `<div class="panel"><h3>${esc(ldt("toT"))}</h3><div class="fields">
+    <label class="f">${esc(ldt("cust"))}<input id="ld_name" value="${esc(share.custName||"")}" autocomplete="off"></label>
+    <label class="f">${esc(ldt("ph"))}<input id="ld_phone" type="tel" inputmode="tel" placeholder="012-345 6789" value="${esc(share.custPhone||"")}" autocomplete="off"></label>
+    <label class="check full"><input type="checkbox" id="ld_fon" ${share.followOn?"checked":""}>${esc(ldt("follow"))}</label>
+    <label class="f full" ${share.followOn?"":"hidden"} id="ld_fwrap"><input id="ld_fat" type="datetime-local" value="${esc(share.followAt||"")}" aria-label="${esc(ldt("nextAt"))}"></label>
+    <p class="hint full" style="margin:0">${esc(ldt("toHint"))}</p></div></div>`;
+}
+function bindShareLead(){
+  const nm=$("#ld_name");if(!nm)return;
+  nm.addEventListener("input",e=>{share.custName=e.target.value});
+  $("#ld_phone").addEventListener("input",e=>{share.custPhone=e.target.value;updateWa()});
+  $("#ld_fon").addEventListener("change",e=>{share.followOn=e.target.checked;$("#ld_fwrap").hidden=!e.target.checked});
+  $("#ld_fat").addEventListener("change",e=>{share.followAt=e.target.value});
+}
+function chTo(ch,text){if(ch==="wa"&&share?.custPhone&&waPhone(share.custPhone))return waPhone(share.custPhone)+"?text="+encodeURIComponent(text||"");return chUrl(ch,text)}
+const ldPill=l=>`<span class="pill ls-${esc(l.status||"open")}">${esc(ldt("st")[l.status||"open"]||"")}</span>`;
+const whenMs=ms=>ms?vWhen(new Date(ms)):"";
+function ldRow(l,showListing=true){
+  const due=ldDue(l);
+  return `<button type="button" class="brow brow-open${due?" ld-due":""}" data-lead="open:${esc(l.id)}" style="border:1px solid ${due?"var(--warn)":"var(--line)"}"><div class="brow-main"><b>${esc(l.custName||"—")}${l.custPhone?` <span class="num brow-ph">${esc(l.custPhone)}</span>`:""}</b><span>${showListing?esc((l.listingTitle||"")+(l.listingRef?" · #"+l.listingRef:""))+" · ":""}${esc(ldt("sent"))} ${esc(l.lastSentAt?fmtDate(isoLocal(new Date(l.lastSentAt))):"—")}${(l.history||[]).length>1?" · "+esc(ldt("times")((l.history||[]).length)):""}</span></div>
+   <div class="brow-side">${ldPill(l)}${l.followAt&&(l.status==="open"||l.status==="interested")?`<span class="num${due?" g-txt-warn":""}">⏰ ${esc(whenMs(l.followAt))}</span>`:""}</div></button>`;
+}
+function ldPanel(l){
+  if(!on("leads"))return"";
+  const mine=leads.filter(x=>x.listingId===l.id);
+  return `<div class="panel private"><h3>${esc(ldt("panel"))} · ${mine.length} <span class="lock-tag">${LOCK}${t("internalOnly")}</span></h3>
+   ${mine.length?`<div class="blist" style="padding:0">${mine.map(x=>ldRow(x,false)).join("")}</div>`:`<p class="hint" style="margin:0">${esc(ldt("panelHint"))}</p>`}</div>`;
+}
+function renderLeads(){
+  const el=$("#list");
+  if(!db){el.innerHTML=`<div class="empty"><h2>${t("noDbT")}</h2><p>${t("noDbP")}</p></div>`;return}
+  if(!leads.length){el.innerHTML=`<div class="empty"><div class="ico">${ICON_HOUSE}</div><h2>${esc(ldt("none"))}</h2><p>${esc(ldt("noneP"))}</p></div>`;return}
+  const s=q.trim().toLowerCase();
+  const items=leads.filter(l=>!s||[l.custName,l.custPhone,l.listingTitle,l.listingRef].join(" ").toLowerCase().includes(s));
+  const due=items.filter(ldDue).sort((a,b)=>a.followAt-b.followAt),act=items.filter(l=>!ldDue(l)&&["open","interested","viewing"].includes(l.status||"open")),end=items.filter(l=>["notInterested","closed"].includes(l.status));
+  const sec=(h,a)=>a.length?`<h3 class="vh">${esc(h)} · ${a.length}</h3><div class="blist" style="padding:4px 0 8px">${a.map(x=>ldRow(x)).join("")}</div>`:"";
+  el.innerHTML=(sec(ldt("due"),due)+sec(ldt("active"),act)+sec(ldt("ended"),end))||`<div class="empty"><h2>${t("noMatchT")}</h2><p>${t("noMatchP")}</p></div>`;
+}
+function openLead(id){ldOpen=id;mode="ldetail";ldConfirm=false;renderLead()}
+function renderLead(){
+  const l=leads.find(x=>x.id===ldOpen);if(!l){closeSheet();return}
+  const st=l.status||"open",wa=ldWa(l),li=listings.find(x=>x.id===l.listingId);
+  const hist=(l.history||[]).slice().reverse().map(h=>`<li><span class="num">${esc(vWhen(new Date(h.at)))}</span> · ${esc(ldt("fmt")[h.fmt]||h.fmt||"")} · ${esc(t("chN")[h.ch]||h.ch||"")}</li>`).join("");
+  $("#sheet").innerHTML=`<div class="sheet-bar"><div class="wrap"><button class="btn ghost" type="button" data-act="close">‹ ${t("back")}</button><h2>${esc(l.custName||l.custPhone||"")}</h2></div></div>
+  <div class="wrap sheet-main">
+    <div class="panel"><div class="head-row">${ldPill(l)}<span class="pill vp-later">${esc(ldt("stage")[l.stage||"sent"])}</span></div>
+      <div class="big-title">${esc(l.custName||"—")}</div>
+      ${l.custPhone?`<div class="contact" style="margin-top:4px"><span class="num">${esc(l.custPhone)}</span>${phoneActions(l.custPhone)}</div>`:""}
+      <dl class="facts" style="margin-top:12px"><div><dt>${esc(vt("listing"))}</dt><dd>${esc(l.listingTitle||"")}${l.listingRef?" · #"+esc(l.listingRef):""}</dd></div><div><dt>${esc(ldt("sent"))}</dt><dd class="num">${esc(l.sentAt?vWhen(new Date(l.sentAt)):"—")}</dd></div></dl>
+      ${li?`<div class="actions" style="margin-top:12px"><button class="btn mini" type="button" data-lead="listing:${esc(l.id)}">${esc(ldt("openListing"))}</button></div>`:""}</div>
+    ${canWrite&&!["notInterested","closed"].includes(st)?`<div class="panel"><h3>${esc(ldt("stage")[l.stage||"sent"])}</h3><div class="vmsg" id="ldmsg">${esc(ldMsg(l))}</div>
+      <div class="actions" style="margin-top:10px">${wa?`<a class="btn" href="https://wa.me/${wa.replace("https://wa.me/","")}" target="_blank" rel="noopener">${esc(ldt("wa"))}</a>`:""}<button class="btn" type="button" data-lead="copy:${esc(l.id)}">${esc(vt("copy"))}</button></div>
+      <div class="pg-in" style="margin-top:14px;align-items:center"><span class="hint" style="margin:0">${esc(ldt("nextAt"))}</span><input type="datetime-local" id="ld_next" value="${l.followAt?esc(localDT(l.followAt)):""}"><button class="btn mini" type="button" data-lead="setf:${esc(l.id)}">${esc(ldt("save"))}</button></div>
+      <div class="actions" style="margin-top:10px"><button class="btn mini" type="button" data-lead="later:${esc(l.id)}">${esc(ldt("later")(rem("againH")))}</button><button class="btn mini" type="button" data-lead="tmr:${esc(l.id)}">${esc(ldt("tomorrow"))}</button>${l.followAt?`<button class="btn mini" type="button" data-lead="done:${esc(l.id)}">${esc(ldt("done"))}</button>`:""}</div></div>`:""}
+    ${canWrite?`<div class="panel"><h3>${esc(bt("status"))}</h3><div class="actions">${on("viewings")&&li?`<button class="btn" type="button" data-lead="view:${esc(l.id)}">${esc(ldt("yesView"))}</button>`:""}${Object.keys(L.zh.ld.st).filter(k=>k!==st).map(k=>`<button class="btn mini" type="button" data-lead="st:${esc(l.id)}:${k}">${esc(ldt("st")[k])}</button>`).join("")}</div></div>`:""}
+    ${hist?`<div class="panel"><h3>${esc(ldt("history"))}</h3><ul class="ld-hist">${hist}</ul></div>`:""}
+    ${canWrite?(ldConfirm?`<div class="confirm"><p>${esc(ldt("delQ"))}</p><button class="btn" type="button" data-act="cancel-ldel">${t("cancel")}</button><button class="btn solid-danger" type="button" data-act="do-ldel">${t("delYes")}</button></div>`:`<div class="actions"><button class="btn danger" type="button" data-act="ldel">${esc(ldt("del"))}</button></div>`):""}
+  </div>`;
+  showSheet();
+}
+async function ldUpdate(id,upd){try{await db.collection("leads").doc(id).update({...upd,updatedAt:Date.now()})}catch(e){toast(t("eSave"))}}
+function leadAct(spec,el){
+  const [act,id,x]=spec.split(":"),l=leads.find(z=>z.id===id);if(!l)return;
+  const hrs=Number(rem("againH"))||3;
+  switch(act){
+    case "open":return openLead(id);
+    case "listing":return openDetail(l.listingId);
+    case "copy":return copyText(ldMsg(l),$("#ldmsg"));
+    case "view":return openViewingForm(null,l.listingId,{custName:l.custName||"",custPhone:l.custPhone||"",lang:l.lang||lang,leadId:l.id});
+    case "next":ldUpdate(id,{status:"interested",followAt:""});return openDetail(l.listingId);
+    case "no":return ldUpdate(id,{status:"notInterested",followAt:""});
+    case "later":toast(ldt("later")(hrs));return ldUpdate(id,{followAt:Date.now()+hrs*36e5});
+    case "tmr":return ldUpdate(id,{followAt:atTime(Date.now()+864e5,rem("followTime"))});
+    case "done":return ldUpdate(id,{followAt:""});
+    case "setf":{const v=$("#ld_next")?.value;return ldUpdate(id,{followAt:v?new Date(v).getTime():""})}
+    case "st":return ldUpdate(id,{status:x,...(["notInterested","closed","viewing"].includes(x)?{followAt:""}:{})});
+  }
+}
+async function deleteLead(){try{await db.collection("leads").doc(ldOpen).delete();toast(ldt("deleted"));closeSheet()}catch(e){toast(t("delFail"));ldConfirm=false;renderLead()}}
+
+/* ---------- after-viewing question & follow-up banner ---------- */
+const vAsk=v=>{if((v.status||"scheduled")!=="scheduled"||v.asked)return false;const at=vTimes(v).at.getTime(),now=Date.now();return now>=at+Number(rem("askAfter"))*6e4&&now<at+4*864e5};
+async function vAskAct(spec){
+  const [act,id]=spec.split(":"),v=viewings.find(z=>z.id===id);if(!v)return;
+  const now=Date.now(),hrs=Number(rem("againH"))||3;
+  const base={listingId:v.listingId,listingTitle:v.listingTitle,listingRef:v.listingRef,area:v.area,custName:v.custName,custPhone:v.custPhone,lang:v.lang||lang};
+  const leadPatch=p=>{if(!v.custPhone&&!v.leadId)return;if(v.leadId&&leads.some(x=>x.id===v.leadId))return ldUpdate(v.leadId,{stage:"viewed",...p});return upsertLead(base,{stage:"viewed",viewingId:v.id,...p})};
+  if(act==="follow"){await vUpdate(id,{status:"done",asked:now,outcome:"follow"});await leadPatch({status:"open",followAt:now+hrs*36e5});toast(ldt("later")(hrs))}
+  else if(act==="next"){await vUpdate(id,{status:"done",asked:now,outcome:"interested"});leadPatch({status:"interested",followAt:""});openDetail(v.listingId)}
+  else if(act==="no"){await vUpdate(id,{status:"done",asked:now,outcome:"notInterested"});leadPatch({status:"notInterested",followAt:""})}
+  else if(act==="noshow"){await vUpdate(id,{status:"noshow",asked:now,outcome:"noshow"})}
+}
+function followBanner(){
+  if(!db)return"";
+  const asks=on("viewings")?viewings.filter(vAsk):[],due=on("leads")?leads.filter(ldDue).sort((a,b)=>a.followAt-b.followAt):[];
+  let h="";
+  if(asks.length)h+=`<div class="renew fban"><h2>${esc(ldt("askT"))} · ${asks.length}</h2>${asks.map(v=>`<div class="ren-row"><div class="ren-main"><b>${esc(ldt("viewedQ")({name:v.custName||"",title:v.listingTitle||"",when:vWhen(vTimes(v).at)}))}</b></div><div class="actions">
+     <button class="btn mini" type="button" data-vask="follow:${esc(v.id)}">${esc(ldt("fu"))}</button><button class="btn mini" type="button" data-vask="next:${esc(v.id)}">${esc(ldt("next"))}</button><button class="btn mini" type="button" data-vask="no:${esc(v.id)}">${esc(ldt("no"))}</button><button class="btn mini" type="button" data-vask="noshow:${esc(v.id)}">${esc(ldt("noshow"))}</button></div></div>`).join("")}</div>`;
+  if(due.length)h+=`<div class="renew fban"><h2>${esc(ldt("bannerT"))} · ${due.length}</h2>${due.map(l=>{const wa=ldWa(l);return `<div class="ren-row"><div class="ren-main"><b>${esc(l.custName||l.custPhone||"")} · ${esc(l.listingTitle||"")}</b><span>${esc(ldt("stage")[l.stage||"sent"])} · ${esc(ldt("sent"))} ${esc(l.lastSentAt?vWhen(new Date(l.lastSentAt)):"—")}</span></div><div class="actions">
+     ${wa?`<a class="btn mini" href="${wa}" target="_blank" rel="noopener">${esc(ldt("wa"))}</a>`:""}${l.stage==="viewed"?`<button class="btn mini" type="button" data-lead="next:${esc(l.id)}">${esc(ldt("next"))}</button>`:on("viewings")?`<button class="btn mini" type="button" data-lead="view:${esc(l.id)}">${esc(ldt("yesView"))}</button>`:""}<button class="btn mini" type="button" data-lead="no:${esc(l.id)}">${esc(ldt("no"))}</button><button class="btn mini" type="button" data-lead="later:${esc(l.id)}">${esc(ldt("later")(rem("againH")))}</button><button class="btn mini" type="button" data-lead="tmr:${esc(l.id)}">${esc(ldt("tomorrow"))}</button><button class="btn mini" type="button" data-lead="done:${esc(l.id)}">✓</button></div></div>`}).join("")}</div>`;
+  return h;
+}
+const banners=()=>followBanner()+(on("viewings")?viewBanner():"")+(on("renewal")?renewBanner():"");
+
+/* ---------- payment summary ---------- */
+const PM={
+ zh:{hi:(n,ti)=>`您好${n?" "+n:""}，这是 ${ti} 的租房付款摘要：`,rent:"月租",start:"租约开始",adv:"预付租金",sec:"押金",util:"水电押金",acc:"门卡 / 车位押金",fees:"印花税及租约费",total:"总额",earn:"已付定金",byA:"由中介公司保管",byO:"已付给屋主",bal:"余额",
+  payBy:d=>`请在交钥匙日期 ${d} 前付清余额。`,paid:"余额已付清，谢谢！",thanks:"谢谢！",earnA:(e,f,r)=>`定金 ${e} 由中介公司保管（stakeholder）。签约后扣除代理费 ${f}，余下 ${r} 转给您。`,earnA0:e=>`定金 ${e} 由中介公司保管（stakeholder），签约后转给您。`,earnO:(e,f)=>`定金 ${e} 已直接付给您。${f?`代理费 ${f} 请在签约时付给中介。`:""}`,tPays:(b,d)=>`租客会在交钥匙日期 ${d} 前付清余额 ${b}。`,tPaid:b=>`租客已付清余额 ${b}。`,keys:"交钥匙 / 入住日期",totalT:"租客应付总额"},
+ ms:{hi:(n,ti)=>`Salam${n?" "+n:""}, ini ringkasan bayaran sewa untuk ${ti}:`,rent:"Sewa bulanan",start:"Mula sewa",adv:"Sewa pendahuluan",sec:"Deposit sekuriti",util:"Deposit utiliti",acc:"Deposit kad akses / parkir",fees:"Duti setem & yuran perjanjian",total:"Jumlah",earn:"Deposit tempahan dibayar",byA:"dipegang syarikat ejen",byO:"dibayar kepada pemilik",bal:"Baki",
+  payBy:d=>`Sila jelaskan baki sebelum tarikh serah kunci ${d}.`,paid:"Baki sudah dijelaskan, terima kasih!",thanks:"Terima kasih!",earnA:(e,f,r)=>`Deposit tempahan ${e} dipegang syarikat ejen (stakeholder). Selepas perjanjian ditandatangani, yuran ejen ${f} ditolak dan baki ${r} akan dipindahkan kepada anda.`,earnA0:e=>`Deposit tempahan ${e} dipegang syarikat ejen (stakeholder) dan akan dipindahkan kepada anda selepas perjanjian ditandatangani.`,earnO:(e,f)=>`Deposit tempahan ${e} sudah dibayar terus kepada anda.${f?` Sila bayar yuran ejen ${f} semasa menandatangani perjanjian.`:""}`,tPays:(b,d)=>`Penyewa akan menjelaskan baki ${b} sebelum tarikh serah kunci ${d}.`,tPaid:b=>`Penyewa sudah menjelaskan baki ${b}.`,keys:"Tarikh serah kunci / masuk",totalT:"Jumlah perlu dibayar penyewa"},
+ en:{hi:(n,ti)=>`Hi${n?" "+n:""}, here is the rental payment summary for ${ti}:`,rent:"Monthly rent",start:"Tenancy starts",adv:"Advance rental",sec:"Security deposit",util:"Utility deposit",acc:"Access card / parking deposit",fees:"Stamp duty & agreement fees",total:"Total",earn:"Earnest deposit paid",byA:"held by the agency",byO:"paid to the landlord",bal:"Balance",
+  payBy:d=>`Please pay the balance before the key handover date, ${d}.`,paid:"The balance has been paid, thank you!",thanks:"Thank you!",earnA:(e,f,r)=>`The earnest deposit of ${e} is held by the agency as stakeholder. After the agreement is signed, the agency fee of ${f} is deducted and the remaining ${r} is released to you.`,earnA0:e=>`The earnest deposit of ${e} is held by the agency as stakeholder and is released to you after the agreement is signed.`,earnO:(e,f)=>`The earnest deposit of ${e} was paid directly to you.${f?` Please pay the agency fee of ${f} when the agreement is signed.`:""}`,tPays:(b,d)=>`The tenant will pay the balance of ${b} before the key handover date, ${d}.`,tPaid:b=>`The tenant has paid the balance of ${b}.`,keys:"Key handover / move-in date",totalT:"Total payable by the tenant"}};
+function payNums(b){const c=bTotals(b);return{...c,total:r2(c.sub+c.fees),bal:c.grand,keys:b.keysDate||b.start||"",ow:b.earnBy==="owner"}}
+function payMsg(b,who,lg){
+  const P=PM[lg],c=payNums(b),M=v=>"RM "+Number(v||0).toLocaleString("en-MY",{minimumFractionDigits:2,maximumFractionDigits:2}),kd=c.keys?fmtDate(c.keys,lg):"—",ti=b.listingTitle||"";
+  const o=[],add=(k,v)=>{if(num(v))o.push(`• ${k}: ${M(v)}`)};
+  if(who==="t"){
+    o.push(P.hi(isCo(b.tenant)?b.tenant.company||b.tenant.name:b.tenant?.name,ti),"");
+    add(P.adv,c.adv);add(P.sec,b.secDep);add(P.util,b.utilDep);add(P.acc,b.accDep);add(P.fees,c.fees);
+    o.push(`*${P.total}: ${M(c.total)}*`,`• ${P.earn}: ${M(c.earn)} (${c.ow?P.byO:P.byA})`,`*${P.bal}: ${M(c.bal)}*`,`• ${P.keys}: ${kd}`,"",b.balPaid?P.paid:P.payBy(kd)+" "+P.thanks);
+  }else{
+    o.push(P.hi(isCo(b.landlord)?b.landlord.company||b.landlord.name:b.landlord?.name,ti),"");
+    if(has(b.rent))o.push(`• ${P.rent}: ${M(b.rent)}`);if(b.start)o.push(`• ${P.start}: ${fmtDate(b.start,lg)}`);
+    o.push(`• ${P.totalT}: ${M(c.total)}`,`• ${P.earn}: ${M(c.earn)} (${c.ow?P.byO:P.byA})`,`• ${P.bal}: ${M(c.bal)}`,`• ${P.keys}: ${kd}`,"");
+    const fee=num(b.feeAmt);
+    o.push(c.ow?P.earnO(M(c.earn),fee?M(fee):""):fee?P.earnA(M(c.earn),M(fee),M(Math.max(0,c.earn-fee))):P.earnA0(M(c.earn)));
+    o.push(b.balPaid?P.tPaid(M(c.bal)):P.tPays(M(c.bal),kd),"",P.thanks);
+  }
+  return o.join("\n");
+}
+function payPanel(b){
+  if(!on("payment"))return"";
+  const c=payNums(b),P=t("pay"),lg=payLang||lang,today=isoLocal(new Date());
+  const days=c.keys?Math.round((new Date(c.keys+"T00:00:00")-new Date(today+"T00:00:00"))/864e5):null;
+  const stCls=b.balPaid?"pay-ok":days!==null&&days<0?"pay-late":days!==null&&days<=7?"pay-due":"pay-wait";
+  const row=(lab,v,cls="")=>`<span class="${cls}">${lab}</span><span class="v ${cls}">${v}</span>`;
+  const tw=waPhone(b.tenant?.phone),lw=waPhone(b.landlord?.phone),tm=payMsg(b,"t",lg),lm=payMsg(b,"l",lg);
+  return `<div class="panel pay-panel"><h3>${esc(P.T)} <span class="pill ${stCls}">${esc(b.balPaid?P.paid:P.unpaid)}${!b.balPaid&&days!==null?" · "+esc(P.left(days)):""}</span></h3>
+   <div class="calc" style="margin-top:0">${row(esc(P.total),money(c.total),"b")}${row(`${esc(P.earn)}<br><small>${esc(P.by[c.ow?"owner":"agent"])}${b.earnDate?" · "+esc(fmtDate(b.earnDate)):""}</small>`,"− "+money(c.earn))}${row(esc(P.bal),money(c.bal),"hl")}${row(esc(P.keys),`<span class="num">${esc(c.keys?fmtDate(c.keys):"—")}</span>`)}</div>
+   ${canWrite?`<div class="actions" style="margin-top:12px"><button class="btn mini" type="button" data-pay="paid:${b.balPaid?"0":"1"}">${b.balPaid?"↺ "+esc(P.unmark):"✓ "+esc(P.markPaid)}</button></div>`:""}
+   <div class="optrow" style="margin-top:14px"><span class="lbl">${esc(P.msgLang)}</span><div class="langs" role="group">${langButtons(lg,"data-plang")}</div></div>
+   <div class="pay-msgs">
+    <div><b>${esc(P.toT)}</b><div class="vmsg" id="pmT">${esc(tm)}</div><div class="actions" style="margin-top:8px">${tw?`<a class="btn mini" href="${tw}?text=${encodeURIComponent(tm)}" target="_blank" rel="noopener">${esc(P.waT)}</a>`:""}<button class="btn mini" type="button" data-pay="copy:t">${esc(P.copyT)}</button></div></div>
+    <div><b>${esc(P.toL)}</b><div class="vmsg" id="pmL">${esc(lm)}</div><div class="actions" style="margin-top:8px">${lw?`<a class="btn mini" href="${lw}?text=${encodeURIComponent(lm)}" target="_blank" rel="noopener">${esc(P.waL)}</a>`:""}<button class="btn mini" type="button" data-pay="copy:l">${esc(P.copyL)}</button></div></div>
+   </div><p class="hint">${esc(P.hint)}</p></div>`;
+}
+function payAct(spec){
+  const [act,x]=spec.split(":"),b=bookings.find(z=>z.id===bOpen);if(!b)return;
+  if(act==="paid"){db.collection("bookings").doc(b.id).update({balPaid:x==="1"?new Date().toISOString():"",updatedAt:Date.now()}).catch(()=>toast(t("eSave")));return}
+  if(act==="copy")return copyText(payMsg(b,x,payLang||lang),$(x==="t"?"#pmT":"#pmL"));
+}
+function skeletonGrid(){return `<div class="grid" aria-busy="true">${Array.from({length:6},()=>`<div class="card sk-card"><div class="cover sk"></div><div class="card-body"><div class="sk sk-line" style="width:42%"></div><div class="sk sk-line" style="width:78%"></div><div class="sk sk-line" style="width:60%"></div></div></div>`).join("")}</div>`}
+
+
 /* ================= sheet plumbing ================= */
-function showSheet(){const s=$("#sheet");if(s.hidden){s.hidden=false;s.scrollTop=0;document.body.style.overflow="hidden"}}
-function closeSheet(){const s=$("#sheet");s.hidden=true;s.innerHTML="";document.body.style.overflow="";openId=null;mode=null;share=null;bOpen=null;bform=null;agree=null;vOpen=null;vform=null}
+function showSheet(){const s=$("#sheet");if(s.hidden){s.hidden=false;s.scrollTop=0;s.dataset.m=mode||"";document.body.style.overflow="hidden"}else if(s.dataset.m!==(mode||"")){s.dataset.m=mode||"";s.scrollTop=0;s.classList.remove("swap");void s.offsetWidth;s.classList.add("swap")}}
+function closeSheet(){const s=$("#sheet");if(!s.hidden&&s.innerHTML&&!matchMedia("(prefers-reduced-motion: reduce)").matches){const g=s.cloneNode(true);g.removeAttribute("id");g.classList.add("sheet-out");g.querySelectorAll("[id]").forEach(x=>x.removeAttribute("id"));document.body.appendChild(g);g.scrollTop=s.scrollTop;setTimeout(()=>g.remove(),240)}s.hidden=true;s.dataset.m="";s.classList.remove("swap");s.innerHTML="";document.body.style.overflow="";openId=null;mode=null;share=null;bOpen=null;bform=null;agree=null;vOpen=null;vform=null;ldOpen=null}
 
 async function copyText(text,fallbackEl){
   try{await navigator.clipboard.writeText(text);toast(t("copied"))}
   catch(_){if(fallbackEl){if(fallbackEl.select){fallbackEl.focus();fallbackEl.select()}else{const r=document.createRange();r.selectNodeContents(fallbackEl);const s=getSelection();s.removeAllRanges();s.addRange(r)}}toast(t("selCopy"))}
 }
 document.addEventListener("click",e=>{
-  const el=e.target.closest("[data-act],[data-open],[data-f],[data-rm],[data-copy],[data-lang],[data-mlang],[data-savep],[data-tab],[data-bopen],[data-fmt],[data-ch],[data-bpdf],[data-pgsave],[data-pgclear],[data-bst],[data-renew],[data-vopen],[data-vsend],[data-vcopy],[data-vmark],[data-vstatus],[data-paste],[data-scopy],[data-cvup],[data-cvreset]");if(!el)return;
+  const el=e.target.closest("[data-act],[data-open],[data-f],[data-rm],[data-copy],[data-lang],[data-mlang],[data-savep],[data-tab],[data-bopen],[data-fmt],[data-ch],[data-bpdf],[data-pgsave],[data-pgclear],[data-bst],[data-renew],[data-vopen],[data-vsend],[data-vcopy],[data-vmark],[data-vstatus],[data-paste],[data-scopy],[data-cvup],[data-cvreset],[data-lead],[data-vask],[data-pay],[data-plang],[data-tpldef],[data-tplclr]");if(!el)return;
   const d=el.dataset;
+  if(d.lead)return leadAct(d.lead,el);
+  if(d.vask)return vAskAct(d.vask);
+  if(d.pay)return payAct(d.pay);
+  if(d.plang){payLang=d.plang;return renderBooking()}
+  if(d.tpldef){const ta=document.querySelector(`[data-tpl="${d.tpldef}"]`);if(ta){ta.value=tplDefault(d.tpldef);ta.dispatchEvent(new Event("change",{bubbles:true}));ta.focus()}return}
+  if(d.tplclr){appCfg.tpl={...appCfg.tpl,[d.tplclr]:""};saveApp();return renderSettings()}
+  if(["ch-send","ch-open","copy-msg","make-pdf"].includes(d.act)&&share)recordLead();
   if(d.cvup){cvUpKey=d.cvup;return $("#cvFile").click()}
   if(d.cvreset){const it=cvItem(d.cvreset);if(it.img&&assets)assets.delete(it.img).catch(()=>{});delete it.img;saveCovers();return renderCovers()}
   if(d.paste)return autoFill(d.paste,el);
@@ -1901,6 +2294,12 @@ document.addEventListener("click",e=>{
     case "do-del":el.disabled=true;deleteListing();break;
     case "cancel-form":cancelForm();break;
     case "covers":openCovers();break;
+    case "open-settings":openSettings();break;
+    case "bk-exp":backupExport();break;
+    case "bk-imp":$("#bkFile")?.click();break;
+    case "ldel":ldConfirm=true;renderLead();break;
+    case "cancel-ldel":ldConfirm=false;renderLead();break;
+    case "do-ldel":el.disabled=true;deleteLead();break;
     case "new-viewing":openViewingForm(null,mode==="detail"?openId:"");break;
     case "edit-viewing":openViewingForm(vOpen);break;
     case "cancel-vform":cancelVForm();break;
@@ -1923,13 +2322,14 @@ document.addEventListener("click",e=>{
   }
 });
 $("#addBtn").addEventListener("click",()=>openForm(null));
+$("#gearBtn").addEventListener("click",()=>openSettings());
 $("#q").addEventListener("input",e=>{q=e.target.value;renderList()});
 $("#typeF").addEventListener("change",e=>{typeF=e.target.value;renderList()});
 $("#dealF").addEventListener("change",e=>{dealF=e.target.value;renderList()});
 
 /* ================= data ================= */
 renderChrome();renderList();
-setInterval(()=>{if(!db)return;$("#renew").innerHTML=viewBanner()+renewBanner();if(tab==="viewings"&&!mode)renderViewings();if(mode==="vdetail")renderViewing()},60000);
+setInterval(()=>{if(!db)return;$("#renew").innerHTML=banners();if(!mode&&(tab==="viewings"||tab==="leads"))renderList();if(mode==="vdetail")renderViewing()},60000);
 (async()=>{
   const c=window.claude;
   if(!c?.use){renderList();return}
@@ -1945,7 +2345,13 @@ setInterval(()=>{if(!db)return;$("#renew").innerHTML=viewBanner()+renewBanner();
     if(mode==="detail")renderDetail();
   },()=>{clearTimeout(timer);if(!loaded)failed=true;renderList()});
   db.doc("settings/covers").get().then(x=>{if(x.exists){const d=x.data()||{};coverCfg={...d,items:d.items||{}}}renderCover()}).catch(()=>{});
-  db.doc("settings/agent").get().then(x=>{if(x.exists)agentPrefs=x.data()||{}}).catch(()=>{});
+  db.doc("settings/agent").get().then(x=>{if(x.exists)agentPrefs=x.data()||{};if(mode==="settings")renderSettings()}).catch(()=>{});
+  loadApp();
+  db.collection("leads").orderBy("createdAt","desc").onSnapshot(snap=>{
+    leads=snap.docs.map(x=>({id:x.id,...x.data()}));
+    renderList();
+    if(mode==="ldetail")renderLead();else if(mode==="detail")renderDetail();
+  },()=>{});
   db.collection("bookings").orderBy("createdAt","desc").onSnapshot(snap=>{
     bookings=snap.docs.map(x=>({id:x.id,...x.data()}));
     renderList();
@@ -1956,30 +2362,6 @@ setInterval(()=>{if(!db)return;$("#renew").innerHTML=viewBanner()+renewBanner();
     renderList();
     if(mode==="vdetail")renderViewing();
   },()=>{});
-})();
-</script>
-<section class="wrap" id="sa" style="padding-block:8px 40px">
-  <div class="panel" style="display:flex;flex-direction:column;gap:10px">
-    <h3 id="saT" style="margin:0"></h3>
-    <p class="hint" id="saP" style="margin:0"></p>
-    <div class="actions"><button class="btn" type="button" id="saExp"></button><button class="btn" type="button" id="saImpBtn"></button><input type="file" id="saImp" accept="application/json,.json" hidden></div>
-    <p class="hint" id="saMsg" style="margin:0"></p>
-  </div>
-</section>
-<script>
-(function(){
-  if(!window.__standalone)return;
-  const T={zh:{t:"资料备份",p:"这个网站版的资料只存在这台手机或电脑的浏览器里，换手机或清除浏览器资料就会不见。请定期按「备份资料」保存备份文件，换手机时用「还原备份」载入。",e:"备份资料",i:"还原备份",ok:(a,b)=>`已还原 ${a} 笔资料、${b} 张照片`,bad:"这不是这个 App 的备份文件",saved:"备份文件已保存"},
-   ms:{t:"Sandaran data",p:"Data versi laman web ini hanya disimpan dalam pelayar telefon atau komputer ini. Data akan hilang jika tukar telefon atau padam data pelayar. Tekan «Sandarkan data» selalu, dan guna «Pulihkan sandaran» pada telefon baharu.",e:"Sandarkan data",i:"Pulihkan sandaran",ok:(a,b)=>`${a} rekod dan ${b} gambar dipulihkan`,bad:"Ini bukan fail sandaran aplikasi ini",saved:"Fail sandaran disimpan"},
-   en:{t:"Data backup",p:"This website version keeps data only in this phone's or computer's browser. It is lost if you change phones or clear browser data. Tap «Back up data» regularly, and use «Restore backup» on a new phone.",e:"Back up data",i:"Restore backup",ok:(a,b)=>`Restored ${a} records and ${b} photos`,bad:"This isn't a backup file from this app",saved:"Backup file saved"}};
-  const tt=()=>T[(typeof lang!=="undefined"&&T[lang])?lang:"zh"];
-  const $$=id=>document.getElementById(id);
-  function paint(){const x=tt();$$("saT").textContent=x.t;$$("saP").textContent=x.p;$$("saExp").textContent=x.e;$$("saImpBtn").textContent=x.i}
-  paint();document.addEventListener("click",e=>{if(e.target.closest("[data-lang]"))setTimeout(paint,0)});
-  $$("saExp").addEventListener("click",async()=>{try{const j=await window.__standalone.exportAll();const d=new Date(),p=n=>String(n).padStart(2,"0");
-    const dl=await window.claude.use("downloads");await dl.save({filename:`prop-rental-backup-${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}.json`,data:new Blob([j],{type:"application/json"})});$$("saMsg").textContent=tt().saved}catch(e){if(e&&e.code!=="declined")$$("saMsg").textContent=String(e.message||e)}});
-  $$("saImpBtn").addEventListener("click",()=>$$("saImp").click());
-  $$("saImp").addEventListener("change",async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;try{const r=await window.__standalone.importAll(await f.text());$$("saMsg").textContent=tt().ok(r.docs,r.photos)}catch(err){$$("saMsg").textContent=tt().bad}});
 })();
 </script>
 </body>
