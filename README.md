@@ -25,4 +25,4 @@ On the website, every phone or computer keeps its own data in its browser. Nothi
 ## Not available on the website version
 
 - Phone push notifications for renewals and viewings (these run only with the Claude version). The reminders still show inside the app.
-- Auto-fill with Claude for messy text. The built-in reader still fills labelled text such as `Name:`, `IC:`, `Tel:`, `Bank:`.
+- Built-in Claude AI. Instead, add your own AI key in Settings → AI connection (Anthropic, OpenAI, Google Gemini or any OpenAI-compatible service). The key stays on that phone. Voice files need OpenAI or Gemini.
