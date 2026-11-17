@@ -378,6 +378,17 @@ label.f .req{color:var(--danger)}
 .cv-dots{position:absolute;right:12px;top:10px;display:flex;gap:5px}
 .cv-dots span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.5)}.cv-dots span.on{background:#fff}
 .lead-tools{display:flex;justify-content:flex-end;padding-block:4px 6px}
+.brow-main{flex:1 1 190px}
+.brow-side{flex:0 1 auto;max-width:100%}
+.brow-side>*{white-space:nowrap}
+#waPick{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center}
+#waPick[hidden]{display:none}
+.wp-back{position:absolute;inset:0;background:rgba(0,0,0,.35)}
+.wp-card{position:relative;width:min(440px,100%);background:var(--surface);border-radius:18px 18px 0 0;padding:18px 16px calc(16px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:10px;box-shadow:0 -8px 30px rgba(0,0,0,.18)}
+.wp-card>b{font-size:16px;margin-bottom:2px}
+.wp-card .btn{justify-content:flex-start;min-height:46px;font-size:15px}
+.wp-card .btn.ghost{justify-content:center}
+@media (prefers-reduced-motion:no-preference){.wp-card{animation:wpin .2s cubic-bezier(.2,.8,.2,1)}@keyframes wpin{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}}
 </style>
 
 <header class="top"><div class="wrap">
@@ -2057,7 +2068,7 @@ document.addEventListener("change",e=>{
   if(d.tpl!==undefined){appCfg.tpl={...appCfg.tpl,[d.tpl]:el.value.trim()};saveApp();return}
   if(d.ag){agentPrefs={...agentPrefs,[d.ag]:el.value.trim()};db.doc("settings/agent").set(agentPrefs).then(()=>toast(st_("saved")),()=>toast(t("eSave")));return}
 });
-function loadApp(){if(!db)return;db.doc("settings/app").get().then(x=>{if(x.exists){const d=x.data()||{};appCfg={features:d.features||{},rem:d.rem||{},tpl:d.tpl||{}}}renderChrome();renderList();if(mode==="settings")renderSettings()}).catch(()=>{})}
+function loadApp(){if(!db)return;db.doc("settings/app").get().then(x=>{if(x.exists){const d=x.data()||{};appCfg={features:d.features||{},rem:d.rem||{},tpl:d.tpl||{}}}renderChrome();renderList();if(mode==="settings")renderSettings();loadWeather()}).catch(()=>{loadWeather()})}
 
 /* ---------- leads ---------- */
 const ldDue=l=>(l.status==="open"||l.status==="interested")&&l.followAt&&Date.now()>=l.followAt;
@@ -2309,7 +2320,7 @@ const addMonths=(iso,n)=>{const d=new Date(iso+"T00:00:00");d.setMonth(d.getMont
 const todayIso=()=>isoLocal(new Date());
 
 /* ---------- AI connection ---------- */
-const aiCfg=()=>{try{return JSON.parse(localStorage.getItem("rlb-ai")||"{}")||{}}catch(_){return{}}};
+let aiCfg=()=>{try{return JSON.parse(localStorage.getItem("rlb-ai")||"{}")||{}}catch(_){return{}}};
 const aiExt=c=>c.provider&&c.provider!=="claude"&&c.key;
 function aiReady(){return !!(aiExt(aiCfg())||sampleFn)}
 const AI_DEF={anthropic:"claude-sonnet-5-5",openai:"gpt-4o-mini",gemini:"gemini-2.5-flash",custom:""};
@@ -2382,6 +2393,7 @@ function renderSettings(){
     ${sec("ai",S.ai,`<div id="aiBox">${aiPanel()}</div>`)}
     ${sec("agent",S.agent,`<div class="fields">${ag("agName")}${ag("agRen",'placeholder="PEA / REN"')}${ag("agBank",'placeholder="Maybank"')}${ag("agAcct",'inputmode="numeric"')}
       ${ag("feeM",'inputmode="decimal"')}${ag("sst",'inputmode="decimal"')}${ag("execDays",'inputmode="numeric"')}<p class="hint full" style="margin:0">${esc(S.agentHint)}</p></div>`)}
+    ${on("weather")?sec("weather",S.wT,weatherPanel()):""}
     ${canWrite?sec("covers",S.coversT,`<button class="btn" type="button" data-act="covers">${esc(S.coversB)} ›</button>`):""}
     ${window.__standalone?sec("backup",S.backup,`<p class="hint" style="margin:0 0 12px">${esc(S.backupP)}</p><div class="actions"><button class="btn" type="button" data-act="bk-exp">${esc(S.exp)}</button><button class="btn" type="button" data-act="bk-imp">${esc(S.imp)}</button><input type="file" id="bkFile" accept="application/json,.json" hidden></div><p class="hint" id="bkMsg"></p>`):""}
   </div>`;
@@ -2773,6 +2785,210 @@ function extraBanner(){
 }
 const banners=()=>followBanner()+extraBanner()+(on("viewings")?viewBanner():"")+(on("renewal")?renewBanner():"");
 
+
+/* ================= v6: WhatsApp app chooser, weather cover, several AI / chatbot connections ================= */
+FEATS.push("weather");
+Object.assign(L.zh.S.f,{weather:["封面自动天气","按气象局预报换晴天、阴天、下雨图"]});
+Object.assign(L.ms.S.f,{weather:["Kulit cuaca automatik","Gambar cerah, mendung atau hujan ikut ramalan MetMalaysia"]});
+Object.assign(L.en.S.f,{weather:["Automatic weather cover","Sunny, cloudy or rainy picture from the MetMalaysia forecast"]});
+Object.assign(L.zh.S.secD,{weather:"封面天气用哪个州属"});Object.assign(L.ms.S.secD,{weather:"Negeri untuk cuaca di kulit"});Object.assign(L.en.S.secD,{weather:"Which state the cover weather is for"});
+Object.assign(L.zh.S,{wT:"天气",wLoc:"天气地点",wNote:"天气资料来自马来西亚气象局（MetMalaysia）的公开预报，几点下雨的估计来自 Open-Meteo。节日期间封面照样放节日图。",
+ aiConn:"使用的接口",aiAdd:"+ 加一个接口",aiDel:"删除这个接口",aiName:"接口名字（自己看的）",aiUrl:"请求网址",aiHeaders:"请求标头（JSON，可不填）",aiBody:"请求内容模板（JSON，用 {{prompt}} 代表问题）",aiPath:"回复所在的栏位（例如 answer 或 choices.0.message.content）",aiHttpHint:"对方 chatbot 的说明文件会写网址、标头和格式。Dify 和 DeepSeek、通义千问可以直接选上面的选项。"});
+Object.assign(L.ms.S,{wT:"Cuaca",wLoc:"Lokasi cuaca",wNote:"Data cuaca daripada ramalan terbuka Jabatan Meteorologi Malaysia (MetMalaysia); anggaran jam hujan daripada Open-Meteo. Semasa perayaan, kulit perayaan tetap dipaparkan.",
+ aiConn:"Sambungan yang digunakan",aiAdd:"+ Tambah sambungan",aiDel:"Padam sambungan ini",aiName:"Nama sambungan (untuk anda)",aiUrl:"Alamat permintaan",aiHeaders:"Pengepala permintaan (JSON, pilihan)",aiBody:"Templat kandungan permintaan (JSON, guna {{prompt}} untuk soalan)",aiPath:"Medan jawapan (cth. answer atau choices.0.message.content)",aiHttpHint:"Dokumen chatbot tersebut menyatakan alamat, pengepala dan format. Dify, DeepSeek dan Qwen boleh dipilih terus di atas."});
+Object.assign(L.en.S,{wT:"Weather",wLoc:"Weather location",wNote:"Weather comes from the Malaysian Meteorological Department (MetMalaysia) open forecast; the rain-hour estimate comes from Open-Meteo. During festivals the festive cover still shows.",
+ aiConn:"Connection in use",aiAdd:"+ Add a connection",aiDel:"Delete this connection",aiName:"Connection name (for you)",aiUrl:"Request URL",aiHeaders:"Request headers (JSON, optional)",aiBody:"Request body template (JSON, use {{prompt}} for the question)",aiPath:"Field holding the reply (e.g. answer or choices.0.message.content)",aiHttpHint:"The chatbot's documentation gives the URL, headers and format. Dify, DeepSeek and Qwen can be picked directly above."});
+Object.assign(L.zh.S.aiProvO,{deepseek:"DeepSeek",qwen:"通义千问 Qwen",dify:"Dify chatbot",http:"其他 chatbot（自定格式）"});
+Object.assign(L.ms.S.aiProvO,{deepseek:"DeepSeek",qwen:"Qwen (Alibaba)",dify:"Chatbot Dify",http:"Chatbot lain (format sendiri)"});
+Object.assign(L.en.S.aiProvO,{deepseek:"DeepSeek",qwen:"Qwen (Alibaba)",dify:"Dify chatbot",http:"Other chatbot (custom format)"});
+Object.assign(AI_DEF,{deepseek:"deepseek-chat",qwen:"qwen-plus",dify:"",http:""});
+Object.assign(L.zh.X,{waT:"用哪个 app 发？",waApp:"WhatsApp",waBiz:"WhatsApp Business",waOther:"其他 app（分享）",waCopy:"复制讯息",waHint:"选「其他 app」只会带讯息，收件人要在那个 app 里自己选。"});
+Object.assign(L.ms.X,{waT:"Hantar guna app mana?",waApp:"WhatsApp",waBiz:"WhatsApp Business",waOther:"App lain (kongsi)",waCopy:"Salin mesej",waHint:"«App lain» hanya membawa mesej; pilih penerima dalam app itu."});
+Object.assign(L.en.X,{waT:"Send with which app?",waApp:"WhatsApp",waBiz:"WhatsApp Business",waOther:"Other app (share)",waCopy:"Copy message",waHint:"«Other app» only carries the message; choose the recipient in that app."});
+
+/* ---------- WhatsApp app chooser ---------- */
+const isAndroid=/Android/i.test(navigator.userAgent);
+function parseWa(href){try{const u=new URL(href);return{phone:u.pathname.replace(/\D/g,""),text:u.searchParams.get("text")||""}}catch(_){return null}}
+let waPick=null;
+function showWaPicker(href){
+  const p=parseWa(href);if(!p)return;waPick={href,...p};
+  let el=$("#waPick");if(!el){el=document.createElement("div");el.id="waPick";document.body.appendChild(el)}
+  const X=t("X");
+  el.innerHTML=`<div class="wp-back" data-wp="close"></div><div class="wp-card" role="dialog" aria-label="${esc(X.waT)}"><b>${esc(X.waT)}</b>
+    <button class="btn" type="button" data-wp="wa">🟢 ${esc(X.waApp)}</button>
+    <button class="btn" type="button" data-wp="biz">💼 ${esc(X.waBiz)}</button>
+    <button class="btn" type="button" data-wp="other">↗ ${esc(X.waOther)}</button>
+    ${p.text?`<button class="btn" type="button" data-wp="copy">${esc(X.waCopy)}</button>`:""}
+    <p class="hint" style="margin:0">${esc(X.waHint)}</p>
+    <button class="btn ghost" type="button" data-wp="close">${t("cancel")}</button></div>`;
+  el.hidden=false;
+}
+function closeWaPicker(){const el=$("#waPick");if(el){el.hidden=true;el.innerHTML=""}waPick=null}
+function openOut(url){const a=document.createElement("a");a.href=url;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove()}
+function waIntent(pkg,p){const q=new URLSearchParams();if(p.phone)q.set("phone",p.phone);if(p.text)q.set("text",p.text);return `intent://send/?${q.toString()}#Intent;scheme=whatsapp;package=${pkg};S.browser_fallback_url=${encodeURIComponent(p.phone?`https://wa.me/${p.phone}?text=${encodeURIComponent(p.text)}`:`https://wa.me/?text=${encodeURIComponent(p.text)}`)};end`}
+async function waChoose(k){
+  const p=waPick;if(!p)return;
+  if(k==="close")return closeWaPicker();
+  if(k==="copy"){closeWaPicker();return copyText(p.text,null)}
+  if(k==="other"){closeWaPicker();if(navigator.share){try{await navigator.share({text:p.text})}catch(e){}}else copyText(p.text,null);return}
+  closeWaPicker();
+  if(isAndroid)return openOut(waIntent(k==="biz"?"com.whatsapp.w4b":"com.whatsapp",p));
+  openOut(p.href);
+}
+document.addEventListener("click",e=>{
+  const w=e.target.closest("[data-wp]");if(w){e.preventDefault();return waChoose(w.dataset.wp)}
+  const a=e.target.closest('a[href^="https://wa.me/"]');if(!a)return;
+  e.preventDefault();showWaPicker(a.href);
+},true);
+
+/* ---------- several AI / chatbot connections ---------- */
+function aiStore(){
+  let s=null;try{s=JSON.parse(localStorage.getItem("rlb-ai2")||"null")}catch(_){}
+  if(!s||!Array.isArray(s.list)){let old={};try{old=JSON.parse(localStorage.getItem("rlb-ai")||"{}")||{}}catch(_){}
+    const id="c"+Date.now().toString(36);s={active:id,list:[{id,name:"",...old}]}}
+  if(!s.list.length){const id="c"+Date.now().toString(36);s={active:id,list:[{id,name:""}]}}
+  if(!s.list.some(c=>c.id===s.active))s.active=s.list[0].id;
+  return s;
+}
+function aiPut(s){try{localStorage.setItem("rlb-ai2",JSON.stringify(s))}catch(_){}}
+aiCfg=()=>{const s=aiStore();return s.list.find(c=>c.id===s.active)||{}};
+const OAI_BASE={openai:"https://api.openai.com/v1",deepseek:"https://api.deepseek.com/v1",qwen:"https://dashscope-intl.aliyuncs.com/compatible-mode/v1"};
+const pathGet=(o,p)=>String(p||"").split(".").filter(Boolean).reduce((a,k)=>a==null?a:a[k],o);
+const _extText=extText;
+extText=async function(c,prompt,json){
+  if(c.provider==="dify"){
+    const base=(c.base||"https://api.dify.ai/v1").replace(/\/+$/,"");
+    const r=await fetch(base+"/chat-messages",{method:"POST",headers:{"content-type":"application/json",authorization:"Bearer "+c.key},body:JSON.stringify({inputs:{},query:prompt,response_mode:"blocking",user:"prop-rental"})});
+    const j=await r.json();if(!r.ok)throw new Error(j?.message||r.status);return j.answer||"";
+  }
+  if(c.provider==="http"){
+    let headers={"content-type":"application/json"};if(c.headers){try{Object.assign(headers,JSON.parse(c.headers))}catch(_){throw new Error("headers JSON")}}
+    if(c.key&&!Object.keys(headers).some(h=>/authorization|api-key/i.test(h)))headers.authorization="Bearer "+c.key;
+    const body=String(c.body||'{"message":"{{prompt}}"}').split("{{prompt}}").join(JSON.stringify(prompt).slice(1,-1));
+    const r=await fetch(c.base,{method:"POST",headers,body});const raw=await r.text();if(!r.ok)throw new Error(raw.slice(0,160)||r.status);
+    let j;try{j=JSON.parse(raw)}catch(_){return raw}
+    const v=pathGet(j,c.path||"");return typeof v==="string"?v:typeof j==="string"?j:JSON.stringify(v??j);
+  }
+  if(c.provider==="deepseek"||c.provider==="qwen")return _extText({...c,provider:"custom",base:c.base||OAI_BASE[c.provider],model:c.model||AI_DEF[c.provider]},prompt,json);
+  return _extText(c,prompt,json);
+};
+const aiExt2=c=>c.provider&&c.provider!=="claude"&&(c.key||c.provider==="http")&&(c.provider!=="http"||c.base);
+aiReady=function(){return !!(aiExt2(aiCfg())||sampleFn)};
+aiText=async function(prompt,json){
+  const c=aiCfg();
+  if(aiExt2(c)){try{return await extText(c,prompt,json)}catch(e){if(!sampleFn)throw e}}
+  if(sampleFn){const r=await sampleFn(prompt,{modelTier:json?"quick":"default"});return r.text}
+  throw {code:"no_ai"};
+};
+aiPanel=function(){
+  const S=t("S"),st=aiStore(),c=st.list.find(x=>x.id===st.active)||{},p=c.provider||(sampleFn?"claude":"openai");
+  const provs=Object.keys(S.aiProvO).filter(k=>k!=="claude"||sampleFn);
+  const nm=x=>x.name||S.aiProvO[x.provider||(sampleFn?"claude":"openai")]||"—";
+  return `<div class="fields">
+    ${st.list.length>1?`<label class="f full">${esc(S.aiConn)}<select id="ai_active">${st.list.map(x=>`<option value="${esc(x.id)}" ${x.id===st.active?"selected":""}>${esc(nm(x))}</option>`).join("")}</select></label>`:""}
+    <label class="f">${esc(S.aiName)}<input id="ai_name" value="${esc(c.name||"")}" placeholder="${esc(nm(c))}"></label>
+    <label class="f">${esc(S.aiProv)}<select id="ai_provider">${provs.map(k=>`<option value="${k}" ${p===k?"selected":""}>${esc(S.aiProvO[k])}</option>`).join("")}</select></label>
+    ${p==="claude"?"":`<label class="f full">${esc(S.aiKey)}<input id="ai_key" type="password" autocomplete="off" value="${esc(c.key||"")}" placeholder="sk-…"></label>
+    ${["dify","http"].includes(p)?"":`<label class="f">${esc(S.aiModel)}<input id="ai_model" value="${esc(c.model||"")}" placeholder="${esc(AI_DEF[p]||"model")}"></label>`}
+    ${["custom","dify","http","deepseek","qwen"].includes(p)?`<label class="f${p==="http"?" full":""}">${esc(p==="http"?S.aiUrl:S.aiBase)}<input id="ai_base" value="${esc(c.base||"")}" placeholder="${esc(p==="dify"?"https://api.dify.ai/v1":p==="http"?"https://…":OAI_BASE[p]||"https://…/v1")}"></label>`:""}
+    ${p==="openai"||p==="custom"?`<label class="f">${esc(S.aiAudio)}<input id="ai_audio" value="${esc(c.audio||"")}" placeholder="whisper-1"></label>`:""}
+    ${p==="http"?`<label class="f full">${esc(S.aiHeaders)}<textarea id="ai_headers" rows="2" placeholder='{"x-api-key":"…"}'>${esc(c.headers||"")}</textarea></label>
+      <label class="f full">${esc(S.aiBody)}<textarea id="ai_body" rows="3" placeholder='{"message":"{{prompt}}"}'>${esc(c.body||"")}</textarea></label>
+      <label class="f full">${esc(S.aiPath)}<input id="ai_path" value="${esc(c.path||"")}" placeholder="answer"></label>`:""}
+    ${["http","dify"].includes(p)?`<p class="hint full" style="margin:0">${esc(S.aiHttpHint)}</p>`:""}`}
+    <p class="hint full" style="margin:0">${esc(S.aiNote)}</p>
+    <div class="actions full"><button class="btn mini" type="button" data-act="ai-test">${esc(S.aiTest)}</button><button class="btn mini" type="button" data-act="ai-add">${esc(S.aiAdd)}</button>${st.list.length>1?`<button class="btn mini danger" type="button" data-act="ai-del">${esc(S.aiDel)}</button>`:""}<span class="hint" id="aiTestMsg" style="margin:0;align-self:center"></span></div></div>`;
+};
+aiSaveCfg=function(){
+  const st=aiStore(),i=st.list.findIndex(x=>x.id===st.active),c=st.list[i]||{},g=id=>{const e=document.getElementById(id);return e?e.value.trim():undefined};
+  for(const [k,id] of [["name","ai_name"],["provider","ai_provider"],["key","ai_key"],["model","ai_model"],["base","ai_base"],["audio","ai_audio"],["headers","ai_headers"],["body","ai_body"],["path","ai_path"]]){const v=g(id);if(v!==undefined)c[k]=v}
+  st.list[i]=c;aiPut(st);
+};
+function aiSwitch(id){const st=aiStore();st.active=id;aiPut(st);$("#aiBox").innerHTML=aiPanel()}
+function aiAddConn(){aiSaveCfg();const st=aiStore(),id="c"+Date.now().toString(36);st.list.push({id,name:"",provider:"openai"});st.active=id;aiPut(st);$("#aiBox").innerHTML=aiPanel()}
+function aiDelConn(){const st=aiStore();st.list=st.list.filter(x=>x.id!==st.active);st.active=st.list[0]?.id;aiPut(st);$("#aiBox").innerHTML=aiPanel()}
+
+/* ---------- weather cover (MetMalaysia + Open-Meteo) ---------- */
+const WLOC={kl:["Kuala Lumpur",3.139,101.687],selangor:["Selangor",3.073,101.518],putrajaya:["Putrajaya",2.926,101.696],johor:["Johor",1.4927,103.7414],melaka:["Melaka",2.1896,102.2501],ns:["Negeri Sembilan",2.7297,101.9381],pahang:["Pahang",3.8077,103.326],perak:["Perak",4.5975,101.0901],penang:["Pulau Pinang",5.4141,100.3288],kedah:["Kedah",6.1248,100.3678],perlis:["Perlis",6.4414,100.1986],kelantan:["Kelantan",6.1254,102.2381],terengganu:["Terengganu",5.3302,103.1408],sabah:["Sabah",5.9804,116.0735],sarawak:["Sarawak",1.5533,110.3592],labuan:["Labuan",5.2831,115.2308]};
+const WNAME={zh:{kl:"吉隆坡",selangor:"雪兰莪",putrajaya:"布城",johor:"柔佛",melaka:"马六甲",ns:"森美兰",pahang:"彭亨",perak:"霹雳",penang:"槟城",kedah:"吉打",perlis:"玻璃市",kelantan:"吉兰丹",terengganu:"登嘉楼",sabah:"沙巴",sarawak:"砂拉越",labuan:"纳闽"}};
+const wName=k=>(WNAME[lang]||{})[k]||WLOC[k]?.[0]||k;
+const W={zh:{c:{sun:"晴",cloud:"阴",rain:"有雨",storm:"雷雨",haze:"有霾",clear:"无雨"},p:{m:"早上",a:"下午",n:"晚上"},src:"气象局",
+  t:{storm:(w,h)=>`今天${h?h+"左右":w}有雷雨，出门记得带伞`,rain:(w,h)=>`今天${h?h+"左右":w}会下雨，记得带伞`,haze:()=>"今天有霾，出门注意",cloud:()=>"今天多云，没有雨",sun:()=>"今天天晴，没有雨",clear:()=>"今晚不会下雨"},hr:h=>h<12?`早上 ${h} 点`:h===12?"中午 12 点":h<19?`下午 ${h-12} 点`:`晚上 ${h-12} 点`},
+ ms:{c:{sun:"Cerah",cloud:"Mendung",rain:"Hujan",storm:"Ribut petir",haze:"Berjerebu",clear:"Tiada hujan"},p:{m:"Pagi",a:"Petang",n:"Malam"},src:"MetMalaysia",
+  t:{storm:(w,h)=>`Ribut petir ${w.toLowerCase()} ini${h?` sekitar jam ${h}`:""}, bawa payung`,rain:(w,h)=>`Hujan ${w.toLowerCase()} ini${h?` sekitar jam ${h}`:""}, bawa payung`,haze:()=>"Berjerebu hari ini, berhati-hati",cloud:()=>"Mendung hari ini, tiada hujan",sun:()=>"Cerah hari ini, tiada hujan",clear:()=>"Tiada hujan malam ini"},hr:h=>`${h>12?h-12:h}${h<12?" pagi":h<19?" petang":" malam"}`},
+ en:{c:{sun:"Sunny",cloud:"Cloudy",rain:"Rain",storm:"Thunderstorms",haze:"Hazy",clear:"No rain"},p:{m:"Morning",a:"Afternoon",n:"Night"},src:"MetMalaysia",
+  t:{storm:(w,h)=>`Thunderstorms ${w==="Night"?"tonight":"this "+w.toLowerCase()}${h?` around ${h}`:""}, bring an umbrella`,rain:(w,h)=>`Rain ${w==="Night"?"tonight":"this "+w.toLowerCase()}${h?` around ${h}`:""}, bring an umbrella`,haze:()=>"Hazy today, take care outside",cloud:()=>"Cloudy today, no rain",sun:()=>"Sunny today, no rain",clear:()=>"No rain tonight"},hr:h=>`${h>12?h-12:h}${h<12?" am":" pm"}`}};
+let weather=null,wLoading=false;
+const wLocKey=()=>WLOC[appCfg.weatherLoc]?appCfg.weatherLoc:"kl";
+function metCond(s){s=String(s||"").toLowerCase();if(/ribut petir/.test(s))return"storm";if(/hujan/.test(s)&&!/tiada hujan/.test(s))return"rain";if(/jerebu/.test(s))return"haze";if(/tiada hujan|cerah/.test(s))return"none";return""}
+function codeCond(cs){if(!cs||!cs.length)return"";const mx=Math.max(...cs);if(mx>=95)return"storm";if(mx>=51)return"rain";const avg=cs.reduce((a,b)=>a+b,0)/cs.length;return avg>=2.5?"cloud":"sun"}
+const nowPeriod=()=>{const h=new Date().getHours();return h<12?"m":h<19?"a":"n"};
+async function fetchWeather(k){
+  const [nm,lat,lon]=WLOC[k],today=todayIso(),out={loc:k,date:today,updatedAt:Date.now(),met:null,hours:null};
+  try{
+    const r=await fetch(`https://api.data.gov.my/weather/forecast?contains=${encodeURIComponent(nm)}@location__location_name&limit=60`);
+    if(r.ok){const a=await r.json(),rows=(Array.isArray(a)?a:[]).filter(x=>x.date===today);const pick=["St","Ds","Tn"].map(p=>rows.find(x=>String(x.location?.location_id||"").startsWith(p))).find(Boolean)||rows[0];
+      if(pick)out.met={m:pick.morning_forecast,a:pick.afternoon_forecast,n:pick.night_forecast,sum:pick.summary_forecast,when:pick.summary_when,min:pick.min_temp,max:pick.max_temp,place:pick.location?.location_name}}
+  }catch(_){}
+  try{
+    const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=precipitation_probability,weather_code&daily=temperature_2m_min,temperature_2m_max&timezone=Asia%2FKuala_Lumpur&forecast_days=1`);
+    if(r.ok){const j=await r.json();out.hours={pp:j.hourly?.precipitation_probability||[],code:j.hourly?.weather_code||[]};if(!out.met&&j.daily){out.tmin=Math.round(j.daily.temperature_2m_min?.[0]);out.tmax=Math.round(j.daily.temperature_2m_max?.[0])}}
+  }catch(_){}
+  return out.met||out.hours?out:null;
+}
+async function loadWeather(force){
+  if(!on("weather")||wLoading)return;const k=wLocKey(),today=todayIso();
+  if(!force&&weather&&weather.loc===k&&weather.date===today&&Date.now()-weather.updatedAt<30*6e4)return;
+  wLoading=true;
+  try{
+    if(db){try{const x=await db.doc("settings/weather").get();const d=x.exists?x.data():null;if(d&&d.loc===k&&d.date===today&&(!weather||d.updatedAt>weather.updatedAt)){weather=d;renderCover()}}catch(_){}}
+    const live=await fetchWeather(k);
+    if(live){weather=live;renderCover();if(db&&canWrite)db.doc("settings/weather").set(live).catch(()=>{})}
+  }finally{wLoading=false}
+}
+function wSummary(){
+  const w=weather;if(!w||w.date!==todayIso()||w.loc!==wLocKey())return null;
+  const per={m:[7,12],a:[12,19],n:[19,24]},hrs=w.hours,cond={};
+  for(const p of ["m","a","n"]){const mc=metCond(w.met?.[p]);const cs=hrs?hrs.code.slice(...per[p]):[];const oc=codeCond(cs);
+    cond[p]=mc==="storm"||mc==="rain"||mc==="haze"?mc:mc==="none"?(p==="n"?"clear":oc==="cloud"?"cloud":"sun"):(oc||"")}
+  const cur=nowPeriod(),h=new Date().getHours();
+  let rainHr=null;if(hrs){for(let i=Math.max(h,7);i<24;i++){if((hrs.pp[i]||0)>=55||(hrs.code[i]||0)>=51){rainHr=i;break}}}
+  const nextWet=["m","a","n"].slice(["m","a","n"].indexOf(cur)).find(p=>cond[p]==="rain"||cond[p]==="storm");
+  return {cond,cur,rainHr,nextWet,min:w.met?.min??w.tmin,max:w.met?.max??w.tmax,met:!!w.met};
+}
+function wArt(k){
+  const gid="wg"+(++cvN),g=(a,b)=>`<defs><linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="800" height="220" fill="url(#${gid})"/>`;
+  const cloud=(x,y,s,c,o=1)=>`<g fill="${c}" opacity="${o}" class="a-float"><ellipse cx="${x}" cy="${y}" rx="${70*s}" ry="${28*s}"/><ellipse cx="${x+50*s}" cy="${y-14*s}" rx="${48*s}" ry="${30*s}"/><ellipse cx="${x-50*s}" cy="${y+4*s}" rx="${40*s}" ry="${20*s}"/></g>`;
+  const sun=(x,y,r)=>`<g><circle cx="${x}" cy="${y}" r="${r*1.7}" fill="#FFE27A" opacity=".25"/>${Array.from({length:10},(_,i)=>{const a=i*Math.PI/5;return `<line class="a-tw" style="animation-delay:${i*.15}s" x1="${x+Math.cos(a)*r*1.25}" y1="${y+Math.sin(a)*r*1.25}" x2="${x+Math.cos(a)*r*1.6}" y2="${y+Math.sin(a)*r*1.6}" stroke="#FFD23F" stroke-width="5" stroke-linecap="round"/>`}).join("")}<circle cx="${x}" cy="${y}" r="${r}" fill="#FFC93C"/></g>`;
+  const bolt=(x,y)=>`<path class="a-tw" d="M${x} ${y}l-22 46h18l-12 40 34-54h-18l14-32z" fill="#FFE066"/>`;
+  switch(k){
+    case"sun":return g("#4FA6E8","#1D6FB8")+sun(680,70,34)+cloud(540,150,.8,"#FFFFFF",.85);
+    case"cloud":return g("#9AAAB8","#5F7182")+cloud(640,70,1.1,"#E6ECF1")+cloud(500,120,.8,"#CBD5DD",.95)+cloud(740,140,.7,"#D8E0E6",.9);
+    case"rain":return g("#5D7488","#2D3E4F")+cloud(640,60,1,"#D9E3EC",.92)+A.rain(36,"#BFD3E6");
+    case"storm":return g("#3B4656","#151B24")+cloud(640,56,1.1,"#8A97A6",.95)+bolt(640,90)+bolt(520,100)+A.rain(30,"#9FB4C9");
+    case"haze":return g("#C9B99A","#8E8068")+`<g fill="#F3E9D2" opacity=".35">${[40,80,120,160].map(y=>`<rect x="0" y="${y}" width="800" height="14" rx="7"/>`).join("")}</g>`+`<circle cx="680" cy="70" r="30" fill="#F6D68B" opacity=".7"/>`;
+    default:return g("#16224A","#0A1029")+A.moon(670,70,30)+A.spark(520,50,2.5,.2)+A.spark(760,150,2.5,.8)+A.spark(600,170,2,.5);
+  }
+}
+function weatherHTML(){
+  const s=wSummary();if(!s)return null;const D=W[lang]||W.en,c=s.cond[s.cur]||"sun";
+  const wet=s.nextWet,title=wet?D.t[s.cond[wet]](D.p[wet],s.rainHr!=null&&["m","a","n"][s.rainHr<12?0:s.rainHr<19?1:2]===wet?D.hr(s.rainHr):""):D.t[c==="clear"?"clear":c==="cloud"?"cloud":c==="haze"?"haze":"sun"]();
+  const art=s.cur==="n"&&(c==="clear"||c==="sun"||c==="cloud")?"night":c;
+  const line=["m","a","n"].filter(p=>s.cond[p]).map(p=>`${D.p[p]} ${D.c[s.cond[p]]}`).join(" · ");
+  const sub=[wName(wLocKey()),line,(s.min!=null&&s.max!=null)?`${s.min}–${s.max}°C`:"",s.met?D.src:""].filter(Boolean).join(" · ");
+  return `<div class="cv"><svg viewBox="0 0 800 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${wArt(art)}</svg><div class="cv-txt ${art==="haze"?"cv-dark":""}"><b>${esc(title)}</b><span>${esc(sub)}</span></div></div>`;
+}
+const _coverHTML=coverHTML;
+coverHTML=function(k,small){if(!small&&(k==="sunny"||k==="monsoon")&&on("weather")){const h=weatherHTML();if(h)return h}return _coverHTML(k,small)};
+function weatherPanel(){const S=t("S"),cur=wLocKey();return `<div class="fields"><label class="f full">${esc(S.wLoc)}<select id="w_loc" ${canWrite?"":"disabled"}>${Object.keys(WLOC).map(k=>`<option value="${k}" ${cur===k?"selected":""}>${esc(wName(k))}</option>`).join("")}</select></label><p class="hint full" style="margin:0">${esc(S.wNote)}</p></div>`}
+document.addEventListener("change",e=>{
+  const x=e.target;
+  if(x.id==="w_loc"){appCfg.weatherLoc=x.value;saveApp();weather=null;loadWeather(true);return}
+  if(x.id==="ai_active"){aiSwitch(x.value);return}
+});
+setInterval(()=>{if(!document.hidden)loadWeather()},10*6e4);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)loadWeather()});
+
 /* ================= sheet plumbing ================= */
 function showSheet(){const s=$("#sheet");if(s.hidden){s.hidden=false;s.scrollTop=0;s.dataset.m=mode||"";document.body.style.overflow="hidden"}else if(s.dataset.m!==(mode||"")){s.dataset.m=mode||"";s.scrollTop=0;s.classList.remove("swap");void s.offsetWidth;s.classList.add("swap")}}
 function closeSheet(){const s=$("#sheet");if(!s.hidden&&s.innerHTML&&!matchMedia("(prefers-reduced-motion: reduce)").matches){const g=s.cloneNode(true);g.removeAttribute("id");g.classList.add("sheet-out");g.querySelectorAll("[id]").forEach(x=>x.removeAttribute("id"));document.body.appendChild(g);g.scrollTop=s.scrollTop;setTimeout(()=>g.remove(),240)}s.hidden=true;s.dataset.m="";s.classList.remove("swap");s.innerHTML="";document.body.style.overflow="";openId=null;mode=null;share=null;bOpen=null;bform=null;agree=null;vOpen=null;vform=null;ldOpen=null;cbOpen=null;cbForm=null;rqOpen=null;rqForm=null;if(air?.busy==="mic"){try{dict?.stop()}catch(_){}try{recog?.stop()}catch(_){}}air=null}
@@ -2839,6 +3055,8 @@ document.addEventListener("click",e=>{
     case "covers":openCovers();break;
     case "open-settings":openSettings();break;
     case "ai-test":aiSaveCfg();aiTest();break;
+    case "ai-add":aiAddConn();break;
+    case "ai-del":aiDelConn();break;
     case "ai-reply":openAiReply();break;
     case "air-back":airBack();break;
     case "air-mic":airMic();break;
